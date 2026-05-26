@@ -1,0 +1,243 @@
+/* ═══════════════════════════════════════════════════════
+   Las tipografías .woff deben estar en /public/fonts/
+   ═══════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────
+   EVOLVE SANS EVO  — Títulos principales (H1–H3)
+   ──────────────────────────────────────────── */
+
+@font-face {
+    font-family: 'Evolve Sans EVO';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src: local('Evolve Sans EVO Thin'),
+        url('/fonts/EvolveWithoutAlt-Thin.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Evolve Sans EVO';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local('Evolve Sans EVO Light'),
+        url('/fonts/EvolveWithoutAlt-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Evolve Sans EVO';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Evolve Sans EVO Regular'),
+        url('/fonts/EvolveWithoutAlt-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Evolve Sans EVO';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Evolve Sans EVO Medium'),
+        url('/fonts/EvolveWithoutAlt-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Evolve Sans EVO';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Evolve Sans EVO Bold'),
+        url('/fonts/EvolveWithoutAlt-Bold.woff') format('woff');
+}
+
+
+/* ────────────────────────────────────────────
+   MADE EVOLVE SANS  — Cuerpo, párrafos, UI
+   ──────────────────────────────────────────── */
+
+@font-face {
+    font-family: 'MADE Evolve Sans';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src: local('MADE Evolve Sans EVO Thin'),
+        url('/fonts/MADEEvolveSans-Thin.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'MADE Evolve Sans';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local('MADE Evolve Sans EVO Light'),
+        url('/fonts/MADEEvolveSans-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'MADE Evolve Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('MADE Evolve Sans EVO Regular'),
+        url('/fonts/MADEEvolveSans-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'MADE Evolve Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('MADE Evolve Sans EVO Medium'),
+        url('/fonts/MADEEvolveSans-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'MADE Evolve Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local('MADE Evolve Sans EVO Bold'),
+        url('/fonts/MADEEvolveSans-Bold.woff') format('woff');
+}
+
+
+/* ════════════════════════════════════════════
+   ETIQUETAS GLOBALES — Aplicar en globals.css
+   después de los @font-face
+   ════════════════════════════════════════════ */
+
+@layer base {
+
+    /* Reset de box-sizing y suavizado de fuentes */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Cuerpo — MADE Evolve Sans para todo el texto general */
+    body {
+        font-family: 'MADE Evolve Sans', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        /* 16px */
+        line-height: 1.65;
+        @apply bg-background text-foreground;
+    }
+
+    /* ── Títulos — Evolve Sans EVO ── */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Evolve Sans EVO', sans-serif;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        @apply text-foreground;
+    }
+
+    h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        /* 32px → 56px */
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        /* 24px → 40px */
+        font-weight: 700;
+    }
+
+    h3 {
+        font-size: clamp(1.25rem, 3vw, 1.875rem);
+        /* 20px → 30px */
+        font-weight: 500;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+        /* 20px */
+        font-weight: 500;
+    }
+
+    h5 {
+        font-size: 1.125rem;
+        /* 18px */
+        font-weight: 500;
+    }
+
+    h6 {
+        font-size: 1rem;
+        /* 16px */
+        font-weight: 500;
+    }
+
+    /* ── Párrafos y texto de descripción — MADE Evolve Sans ── */
+    p {
+        font-family: 'MADE Evolve Sans', sans-serif;
+        font-weight: 400;
+        line-height: 1.7;
+        @apply text-foreground;
+    }
+
+    /* Lead / introducción */
+    p.lead {
+        font-size: 1.125rem;
+        font-weight: 300;
+        line-height: 1.8;
+        @apply text-muted-foreground;
+    }
+
+    /* Texto pequeño / captions */
+    small,
+    .text-small {
+        font-family: 'MADE Evolve Sans', sans-serif;
+        font-size: 0.875rem;
+        /* 14px */
+        font-weight: 400;
+    }
+
+    /* Labels de formularios */
+    label {
+        font-family: 'MADE Evolve Sans', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    /* Código */
+    code,
+    kbd,
+    pre,
+    samp {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.875em;
+    }
+
+    /* Bordes globales */
+    * {
+        @apply border-border outline-ring/50;
+    }
+}
+
+
+/* ════════════════════════════════════════════
+   CLASES DE UTILIDAD TIPOGRÁFICA
+   Para usar con className en componentes React
+   ════════════════════════════════════════════ */
+
+.font-display {
+    font-family: 'Evolve Sans EVO', sans-serif;
+}
+
+.font-body {
+    font-family: 'MADE Evolve Sans', sans-serif;
+}
+
+.font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
