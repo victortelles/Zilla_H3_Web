@@ -1,41 +1,57 @@
-import { FaGithub, FaTwitter, FaDiscord, FaInstagram } from "react-icons/fa";
+"use client";
+
+import { FaTwitter, FaDiscord, FaTelegramPlane, FaVrCardboard } from "react-icons/fa";
+import { FooterColumn, FooterSocial } from "@/types/ui/footer/Footer.types";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    { icon: <FaTwitter className="h-5 w-5" />, href: "#", label: "Twitter" },
-    { icon: <FaGithub className="h-5 w-5" />, href: "#", label: "GitHub" },
-    { icon: <FaDiscord className="h-5 w-5" />, href: "#", label: "Discord" },
-    { icon: <FaInstagram className="h-5 w-5" />, href: "#", label: "Instagram" },
+  const socialLinks: FooterSocial[] = [
+    { icon: "telegram", href: "https://t.me/zilla_h3", label: "Telegram" },
+    { icon: "twitter", href: "https://twitter.com/zilla_h3", label: "Twitter" },
+    { icon: "vrchat", href: "https://vrchat.com/home/user/usr_zilla_h3", label: "VRChat" },
+    { icon: "discord", href: "https://discord.gg/zilla_h3", label: "Discord" },
   ];
 
-  const columns = [
+  const getSocialIcon = (name: string) => {
+    switch (name) {
+      case "telegram":
+        return <FaTelegramPlane className="h-5 w-5" />;
+      case "twitter":
+        return <FaTwitter className="h-5 w-5" />;
+      case "vrchat":
+        return <FaVrCardboard className="h-5 w-5" />;
+      case "discord":
+        return <FaDiscord className="h-5 w-5" />;
+      default:
+        return null;
+    }
+  };
+
+  const columns: FooterColumn[] = [
     {
-      title: "Soluciones",
+      title: "Navigation",
       links: [
-        { name: "Creador de Avatares", href: "#" },
-        { name: "H3 Ecosistema", href: "#" },
-        { name: "Zilla Studio", href: "#" },
-        { name: "API de Desarrollo", href: "#" },
+        { name: "About", href: "#about" },
+        { name: "Services", href: "#services" },
+        { name: "Gallery", href: "#gallery" },
+        { name: "All Projects", href: "/project" },
       ],
     },
     {
-      title: "Soporte",
+      title: "Services",
       links: [
-        { name: "Documentación", href: "#" },
-        { name: "Guías de Estilo", href: "#" },
-        { name: "Estado del API", href: "#" },
-        { name: "Contacto", href: "#" },
+        { name: "Avatar Texturing", href: "#services" },
+        { name: "Accessory Integration", href: "#services" },
+        { name: "Clothing Adaptation", href: "#services" },
+        { name: "Custom Commisions", href: "#about" },
       ],
     },
     {
-      title: "Compañía",
+      title: "Legal",
       links: [
-        { name: "Acerca de", href: "#" },
-        { name: "Blog", href: "#" },
-        { name: "Prensa", href: "#" },
-        { name: "Términos y Privacidad", href: "#" },
+        { name: "Terms of Service", href: "#" },
+        { name: "Privacy Policy", href: "#" },
       ],
     },
   ];
@@ -51,21 +67,23 @@ export default function Footer() {
                 Z
               </div>
               <span className="font-display font-bold text-xl tracking-tight text-foreground">
-                ZILLA<span className="font-light text-muted-foreground">H3</span>
+                ZILLA<span className="font-light text-muted-foreground">_H3</span>
               </span>
             </div>
-            <p className="max-w-xs text-sm text-muted-foreground">
-              La plataforma definitiva para la creación de avatares interactivos del ecosistema H3. Diseña, personaliza y despliega.
+            <p className="max-w-xs text-sm text-muted-foreground leading-relaxed">
+              Premium avatar creation and design services for the H3 ecosystem. Bring your virtual identity to life with high fidelity textures, garments, and interactions.
             </p>
-            <div className="flex space-x-6">
+            <div className="flex space-x-5">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
-                  className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-muted/40 hover:bg-primary hover:text-primary-foreground text-muted-foreground transition-all duration-200"
                   aria-label={social.label}
                 >
-                  {social.icon}
+                  {getSocialIcon(social.icon)}
                 </a>
               ))}
             </div>
@@ -75,10 +93,10 @@ export default function Footer() {
           <div className="mt-12 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0 sm:grid-cols-3">
             {columns.map((col) => (
               <div key={col.title}>
-                <h3 className="text-sm font-semibold tracking-wider text-foreground uppercase">
+                <h3 className="text-xs font-bold tracking-widest text-foreground/80 uppercase">
                   {col.title}
                 </h3>
-                <ul role="list" className="mt-4 space-y-3">
+                <ul className="mt-4 space-y-3">
                   {col.links.map((link) => (
                     <li key={link.name}>
                       <a
@@ -98,17 +116,14 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground text-center md:text-left">
-            &copy; {currentYear} Zilla H3 Inc. Todos los derechos reservados.
+            &copy; {currentYear} Zilla_H3. All rights reserved. Created for VRChat & H3 Ecosystem creators.
           </p>
           <div className="flex space-x-6 text-xs text-muted-foreground">
             <a href="#" className="hover:text-primary transition-colors">
-              Política de Privacidad
+              Privacy Policy
             </a>
             <a href="#" className="hover:text-primary transition-colors">
-              Términos de Servicio
-            </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Cookies
+              Terms of Service
             </a>
           </div>
         </div>
