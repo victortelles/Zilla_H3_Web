@@ -6,9 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import DarkModeToggle from "../darkmode/DarkModeToggle";
 import Button from "../button/Button";
 import { NavLink } from "@/types/ui/navbar/Navbar.types";
+import { configService } from "@/services/configService";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const telegramProfile = configService.getContactTelegram();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -52,7 +54,7 @@ export default function Navbar() {
         {/* Utility Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <DarkModeToggle />
-          <Button variant="primary" size="sm" onClick={() => window.open("https://t.me/zilla_h3", "_blank")}>
+          <Button variant="primary" size="sm" onClick={() => window.open(telegramProfile, "_blank")}>
             Get Custom Avatar
           </Button>
         </div>

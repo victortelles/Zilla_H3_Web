@@ -1,16 +1,18 @@
 "use client";
 
-import { FaTwitter, FaDiscord, FaTelegramPlane, FaVrCardboard } from "react-icons/fa";
+import { FaDiscord, FaTelegramPlane, FaVrCardboard, FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FooterColumn, FooterSocial } from "@/types/ui/footer/Footer.types";
+import { configService } from "@/services/configService";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks: FooterSocial[] = [
-    { icon: "telegram", href: "https://t.me/zilla_h3", label: "Telegram" },
-    { icon: "twitter", href: "https://twitter.com/zilla_h3", label: "Twitter" },
-    { icon: "vrchat", href: "https://vrchat.com/home/user/usr_zilla_h3", label: "VRChat" },
-    { icon: "discord", href: "https://discord.gg/zilla_h3", label: "Discord" },
+    { icon: "telegram", href: configService.getContactTelegram(), label: "Telegram" },
+    { icon: "twitter", href: configService.getTwitterProfile(), label: "Twitter" },
+    { icon: "vrchat", href: configService.getVRChatProfile(), label: "VRChat" },
+    { icon: "discord", href: configService.getContactDiscord(), label: "Discord" },
   ];
 
   const getSocialIcon = (name: string) => {
@@ -18,7 +20,7 @@ export default function Footer() {
       case "telegram":
         return <FaTelegramPlane className="h-5 w-5" />;
       case "twitter":
-        return <FaTwitter className="h-5 w-5" />;
+        return <FaXTwitter className="h-5 w-5" />;
       case "vrchat":
         return <FaVrCardboard className="h-5 w-5" />;
       case "discord":
@@ -115,9 +117,20 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground text-center md:text-left">
-            &copy; {currentYear} Zilla_H3. All rights reserved. Created for VRChat & H3 Ecosystem creators.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-xs text-muted-foreground text-center md:text-left">
+            <p>
+              &copy; {currentYear} Zilla_H3.
+            </p>
+            <span className="hidden sm:inline text-border">|</span>
+            <a
+              href="https://www.victortelles.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-primary transition-all text-xs font-normal"
+            >
+              <FaGithub className="h-4 w-4" /> Developed by AHTyler
+            </a>
+          </div>
           <div className="flex space-x-6 text-xs text-muted-foreground">
             <a href="#" className="hover:text-primary transition-colors">
               Privacy Policy

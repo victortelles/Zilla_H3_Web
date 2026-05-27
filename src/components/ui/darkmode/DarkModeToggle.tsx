@@ -21,7 +21,6 @@ export default function DarkModeToggle() {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
