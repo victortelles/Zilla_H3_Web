@@ -4,7 +4,8 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaTelegramPlane, FaTools, FaCheckCircle, FaStar } from "react-icons/fa";
+import { FaTelegramPlane, FaTools, FaCheckCircle, FaStar, FaPaintBrush } from "react-icons/fa";
+import { SiBlender, SiVrchat } from "react-icons/si";
 import Button from "../ui/button/Button";
 import StatusBadge from "../ui/statusBadge/StatusBadge";
 import { configService } from "@/services/configService";
@@ -41,11 +42,19 @@ export default function About() {
       ease: "power3.out",
     });
 
+    // Orbit rotation around profile image
+    gsap.to(".avatar-orbit", {
+      rotation: 360,
+      duration: 25,
+      repeat: -1,
+      ease: "linear",
+    });
+
   }, { scope: containerRef });
 
   return (
-    <section 
-      id="about" 
+    <section
+      id="about"
       ref={containerRef}
       className="relative py-24 px-4 sm:px-6 lg:px-8 bg-card border-b border-border overflow-hidden"
     >
@@ -54,18 +63,18 @@ export default function About() {
       <div className="absolute left-[-10%] bottom-[10%] w-[350px] h-[350px] rounded-full bg-secondary/5 dark:bg-secondary/5 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        
+
         {/* Left Side: Copywriting */}
         <div className="lg:col-span-7 flex flex-col space-y-6">
           <div className="about-animate-left inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
             <FaTools className="w-3.5 h-3.5" /> Who is Zilla_H3?
           </div>
-          
+
           <h2 className="about-animate-left text-3xl sm:text-4xl font-black tracking-tight leading-tight">
             Crafting Digital Identities <br />
             For The Metaverse
           </h2>
-          
+
           <p className="about-animate-left text-muted-foreground leading-relaxed text-base sm:text-lg">
             I am a dedicated virtual designer specializing in custom VRChat avatar creations and texturing. With extensive experience in Unity setup, avatar physics (PhysBones), and clothing adaptations, I transform conceptual styles into fully optimized 3D digital creations.
           </p>
@@ -88,9 +97,9 @@ export default function About() {
           </div>
 
           <div className="about-animate-left pt-4">
-            <Button 
-              variant="primary" 
-              size="lg" 
+            <Button
+              variant="primary"
+              size="lg"
               onClick={() => window.open(telegramUrl, "_blank")}
               className="gap-2"
             >
@@ -101,28 +110,66 @@ export default function About() {
 
         {/* Right Side: Creator Image Box & Commission Status */}
         <div className="about-animate-right lg:col-span-5 flex flex-col items-center">
-          
+
           {/* Creator Profile Representation Card */}
           <div className="relative w-full max-w-sm rounded-3xl overflow-hidden border border-border bg-background p-4 shadow-lg transition-transform duration-300 hover:scale-[1.01]">
-            {/* Header / Graphic Representation */}
-            <div className="relative aspect-square w-full rounded-2xl bg-card border border-border/80 flex items-center justify-center overflow-hidden mb-5 group">
-              {/* Backglow mesh */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-secondary/5 to-transparent opacity-60 group-hover:scale-105 transition-transform duration-700" />
-              
-              {/* Overlay elements */}
-              <div className="absolute top-4 left-4 p-2 rounded-xl bg-background/80 backdrop-blur-md border border-border/60 flex items-center gap-1.5 text-xs font-bold text-foreground">
-                <FaStar className="text-amber-500" /> Lead Artist
+
+            {/* Image Container with Orbiting rings */}
+            <div className="relative aspect-square w-full flex items-center justify-center mb-5 group">
+              {/* Soft glow in background */}
+              <div className="absolute w-[80%] h-[80%] rounded-full bg-primary/10 blur-xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
+
+              {/* Orbiting Ring with Tech Icons */}
+              <div className="avatar-orbit absolute w-[94%] h-[94%] border border-dashed border-foreground/15 rounded-full pointer-events-none flex items-center justify-center">
+                {/* Blender Icon */}
+                <div className="absolute top-[-14px] flex h-7 w-7 items-center justify-center rounded-full bg-background border border-border shadow-sm text-[#ea7600]">
+                  <SiBlender className="w-4 h-4" />
+                </div>
+                {/* Adobe Icon */}
+                <div className="absolute bottom-[-14px] flex h-7 w-7 items-center justify-center rounded-full bg-background border border-border shadow-sm text-[#ff0000]">
+                  <img src="./ASub3D.svg" alt="Adobe Icon" className="w-3.5 h-3.5" />
+                </div>
+                {/* VRChat Icon */}
+                <div className="absolute left-[-14px] flex h-7 w-7 items-center justify-center rounded-full bg-background border border-border shadow-sm text-[#1fd1ec]">
+                  <SiVrchat className="w-4.5 h-4.5" />
+                </div>
+                {/* Paint Brush Icon */}
+                <div className="absolute right-[-14px] flex h-7 w-7 items-center justify-center rounded-full bg-background border border-border shadow-sm text-primary">
+                  <FaPaintBrush className="w-3.5 h-3.5" />
+                </div>
               </div>
 
-              {/* Character mockup SVG / Avatar Graphic */}
-              <svg 
-                viewBox="0 0 100 100" 
-                className="w-44 h-44 text-muted-foreground/30 dark:text-muted-foreground/20 group-hover:scale-105 transition-transform duration-500"
-                fill="currentColor"
-              >
-                <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 4" />
-                <path d="M50 20c-7.2 0-13 5.8-13 13 0 5.2 3.1 9.7 7.5 11.8v10.2h11V44.8c4.4-2.1 7.5-6.6 7.5-11.8 0-7.2-5.8-13-13-13zm-17 48c-4.4 0-8 3.6-8 8v6c0 1.1.9 2 2 2h46c1.1 0 2-.9 2-2v-6c0-4.4-3.6-8-8-8H33z" />
-              </svg>
+              {/* Central Profile Image Wrapper */}
+              <div className="relative w-[80%] h-[80%] rounded-2xl overflow-hidden border border-border/80 bg-card shadow-inner z-10">
+                {/* Backglow mesh */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/15 via-secondary/5 to-transparent opacity-60 group-hover:scale-105 transition-transform duration-700" />
+
+                {/* Overlay elements */}
+                <div className="absolute top-4 left-4 p-2 rounded-xl bg-background/80 backdrop-blur-md border border-border/60 flex items-center gap-1.5 text-xs font-bold text-foreground z-20">
+                  <FaStar className="text-amber-500" /> Lead Artist
+                </div>
+
+                {/* Creator profile image */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/resources/profile/profile.png"
+                  alt="Zilla_H3 Creator Profile"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+            </div>
+
+            {/* Specification Tags */}
+            <div className="flex flex-wrap gap-1.5 justify-center mb-5">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border">
+                VRChat SDK3
+              </span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border">
+                Quest-Ready
+              </span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20">
+                PhysBones
+              </span>
             </div>
 
             {/* Availability Container underneath */}

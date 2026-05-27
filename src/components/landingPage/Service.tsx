@@ -74,7 +74,7 @@ export default function Service() {
           pin: true,
           scrub: 1,
           start: "top top",
-          end: () => `+=${scrollAmount}`,
+          end: () => `+=${scrollAmount * 2.2}`,
           invalidateOnRefresh: true,
         },
       });

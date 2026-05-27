@@ -3,13 +3,13 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { 
-  FaUserAlt, 
-  FaTshirt, 
-  FaPaintBrush, 
-  FaCrown, 
-  FaGamepad, 
-  FaStar 
+import {
+  FaUserAlt,
+  FaTshirt,
+  FaPaintBrush,
+  FaCrown,
+  FaGamepad,
+  FaStar
 } from "react-icons/fa";
 import { PreloaderProps } from "@/types/landingPage/Preloader.types";
 
@@ -21,7 +21,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const zillaRef = useRef<HTMLSpanElement>(null);
   const h3Ref = useRef<HTMLSpanElement>(null);
   const underscoreRef = useRef<HTMLSpanElement>(null);
-  
+
   const cloudsRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -63,19 +63,19 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
     // 2. Animate clouds and icons
     tl.to(".preloader-cloud", {
-      opacity: 0.45,
+      opacity: 0.65,
       scale: 1,
       duration: 1.5,
       stagger: 0.2,
       ease: "power2.out",
     }, 0.2)
-    .to(".preloader-icon", {
-      opacity: 0.15,
-      y: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: "back.out(1.7)",
-    }, 0.4);
+      .to(".preloader-icon", {
+        opacity: 0.25,
+        y: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "back.out(1.7)",
+      }, 0.4);
 
     // Continuous floating animations for icons
     gsap.to(".preloader-icon", {
@@ -110,11 +110,11 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       duration: 1,
       ease: "power3.inOut",
     }, 1.2)
-    .to(h3Ref.current, {
-      x: 25,
-      duration: 1,
-      ease: "power3.inOut",
-    }, 1.2);
+      .to(h3Ref.current, {
+        x: 25,
+        duration: 1,
+        ease: "power3.inOut",
+      }, 1.2);
 
     // Reveal the underscore in the middle
     tl.to(underscoreRef.current, {
@@ -143,26 +143,26 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       stagger: 0.08,
       ease: "power2.in",
     }, 4.2)
-    .to(textRef.current, {
-      scale: 1.1,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.in",
-    }, 4.5);
+      .to(textRef.current, {
+        scale: 1.1,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.in",
+      }, 4.5);
 
   }, { scope: containerRef });
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#f2eee8] text-[#1b1f3b] overflow-hidden select-none"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-primary text-primary-foreground overflow-hidden select-none"
     >
       {/* Background Sky Icons */}
       <div ref={iconsRef} className="absolute inset-0 pointer-events-none">
         {backgroundIcons.map(({ Icon, size, top, left, delay }, i) => (
           <div
             key={i}
-            className="preloader-icon absolute text-primary/30 dark:text-primary/20"
+            className="preloader-icon absolute text-primary-foreground/20"
             style={{ top, left, transitionDelay: `${delay}s` }}
           >
             <Icon className={`${size}`} />
@@ -174,68 +174,68 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       <div ref={cloudsRef} className="absolute inset-0 pointer-events-none">
         {/* Left Side Clouds */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/resources/cloud-01.png" 
-          alt="Cloud Left 1" 
+        <img
+          src="/resources/cloud-01.png"
+          alt="Cloud Left 1"
           className="preloader-cloud preloader-cloud-left absolute left-[-5%] top-[10%] w-[35%] max-w-[400px] object-contain select-none pointer-events-none"
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/resources/cloud-03.png" 
-          alt="Cloud Left 2" 
+        <img
+          src="/resources/cloud-03.png"
+          alt="Cloud Left 2"
           className="preloader-cloud preloader-cloud-left absolute left-[-10%] bottom-[15%] w-[45%] max-w-[500px] object-contain select-none pointer-events-none"
         />
 
         {/* Right Side Clouds */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/resources/cloud-02.png" 
-          alt="Cloud Right 1" 
+        <img
+          src="/resources/cloud-02.png"
+          alt="Cloud Right 1"
           className="preloader-cloud preloader-cloud-right absolute right-[-5%] top-[15%] w-[40%] max-w-[450px] object-contain select-none pointer-events-none"
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src="/resources/cloud-04.png" 
-          alt="Cloud Right 2" 
+        <img
+          src="/resources/cloud-04.png"
+          alt="Cloud Right 2"
           className="preloader-cloud preloader-cloud-right absolute right-[-8%] bottom-[20%] w-[38%] max-w-[400px] object-contain select-none pointer-events-none"
         />
       </div>
 
       {/* Name Logo in the Center */}
-      <div 
-        ref={textRef} 
+      <div
+        ref={textRef}
         className="relative z-10 flex flex-col items-center gap-6"
       >
-        <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight flex items-center select-none">
+        <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight flex items-center select-none text-white">
           <span ref={zillaRef} className="inline-block">ZILLA</span>
-          <span ref={underscoreRef} className="inline-block text-primary mx-[-12px]">_</span>
+          <span ref={underscoreRef} className="inline-block text-white mx-[-12px]">_</span>
           <span ref={h3Ref} className="inline-block">H3</span>
         </h1>
-        
+
         {/* Subtitle */}
-        <p className="font-body text-sm md:text-base font-semibold tracking-widest text-muted-foreground uppercase animate-pulse select-none">
+        <p className="font-body text-sm md:text-base font-semibold tracking-widest text-primary-foreground/70 uppercase animate-pulse select-none">
           Loading Avatar Creator Portfolio
         </p>
       </div>
 
-      {/* 4-6 Staggered colored showcase boxes representing creations */}
-      <div 
+      {/* 4-6 Staggered showcase boxes representing creations */}
+      <div
         ref={galleryRef}
         className="absolute bottom-[10%] left-1/2 translate-x-[-50%] flex gap-4 md:gap-6 z-10"
       >
-        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-primary/20 border border-primary/30 flex items-center justify-center font-display font-bold text-xs select-none">
+        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-primary-foreground/10 border border-primary-foreground/20 flex items-center justify-center font-display font-bold text-xs text-primary-foreground select-none">
           Texturing
         </div>
-        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-[#e05638]/20 border border-[#e05638]/30 flex items-center justify-center font-display font-bold text-xs select-none">
+        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-secondary/20 border border-secondary/35 flex items-center justify-center font-display font-bold text-xs text-primary-foreground select-none">
           Clothing
         </div>
-        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-[#b55409]/20 border border-[#b55409]/30 flex items-center justify-center font-display font-bold text-xs select-none">
+        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-accent/20 border border-accent/35 flex items-center justify-center font-display font-bold text-xs text-primary-foreground select-none">
           Bones
         </div>
-        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-[#2c319d]/20 border border-[#2c319d]/30 flex items-center justify-center font-display font-bold text-xs select-none">
+        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-muted-foreground/20 border border-muted-foreground/30 flex items-center justify-center font-display font-bold text-xs text-primary-foreground select-none">
           Physics
         </div>
-        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-[#0f0f0f]/10 border border-foreground/10 flex items-center justify-center font-display font-bold text-xs select-none">
+        <div className="gallery-box w-16 h-24 md:w-24 md:h-36 rounded-xl bg-background/20 border border-background/35 flex items-center justify-center font-display font-bold text-xs text-primary-foreground select-none">
           Custom
         </div>
       </div>
