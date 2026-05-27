@@ -1,0 +1,53 @@
+/* ════════════════════════════════════════════
+   SERVICES HORIZONTAL PARALLAX SCROLL STYLES
+   Used by Service.tsx to manage GSAP ScrollTrigger
+   ════════════════════════════════════════════ */
+
+.services-scroll-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.services-horizontal-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: max-content;
+  will-change: transform;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Service Card Sizing and Transitions */
+.service-card-item {
+  flex: 0 0 auto;
+  width: 320px;
+  max-width: 90vw;
+  margin-right: 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .service-card-item {
+    width: 380px;
+    margin-right: 2.5rem;
+  }
+}
+
+.service-card-item:last-child {
+  margin-right: 0;
+}
+
+/* Parallax Inner Image Effect */
+.parallax-img-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.parallax-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  scale: 1.15;
+}
