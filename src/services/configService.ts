@@ -33,18 +33,18 @@ export const configService = {
    * Contact details
    */
   getContactTelegram: (): string => {
-    return process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/zilla_h3";
+    return process.env.NEXT_PUBLIC_TELEGRAM_URL || "";
   },
 
   getContactDiscord: (): string => {
-    return process.env.NEXT_PUBLIC_DISCORD_URL || "https://discord.gg/zilla_h3";
+    return process.env.NEXT_PUBLIC_DISCORD_URL || "";
   },
 
   getVRChatProfile: (): string => {
-    return process.env.NEXT_PUBLIC_VRCHAT_URL || "https://vrchat.com/home/user/usr_zilla_h3";
+    return process.env.NEXT_PUBLIC_VRCHAT_URL || "";
   },
 
   getTwitterProfile: (): string => {
-    return process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/zilla_h3";
+    return process.env.NEXT_PUBLIC_TWITTER_URL || "";
   }
 };
