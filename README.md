@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zilla_H3 — Avatar Creator Portfolio & Showcase
 
-## Getting Started
+Zilla_H3 is a premium web application designed to showcase the work, custom avatar designs, texturing, accessory integrations, and commission availability for the avatar creator **Zilla_H3**.
 
-First, run the development server:
+The site features high-quality, scroll-triggered interactive experiences, blending rich animations (GSAP and Framer Motion) with a clean design system built using Next.js (App Router) and Tailwind CSS v4.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🛠️ Technology Stack
+
+- **Core**: Next.js 16 (App Router, React 19)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4 (configured via `@import` in CSS variables)
+- **Animations**:
+  - **GSAP**: For complex scroll-triggered animations (ScrollTrigger), parallax, and large page entrance timelines.
+  - **Framer Motion**: For rapid micro-interactions (button hovers, card hover effects, input focus states).
+- **Icons**: `react-icons`
+
+---
+
+## 📁 Directory Structure
+
+```text
+src/
+├── app/          # View/route wrappers only (contains no page-specific inline logic)
+├── components/   # UI components grouped by feature (landingPage, admin, ui)
+├── services/     # App business logic, state machines, and OAuth flow handlers
+├── styles/       # Global styles (globals.css, fonts.css) & custom scroll triggers
+├── types/        # TypeScript declarations matching components' structure
+└── utils/        # Generic reusable helper functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Development Instructions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
+- Node.js (v18 or higher)
+- pnpm (recommended) or npm
 
-## Learn More
+### Installation
+Clone the repository and install the dependencies:
+```bash
+pnpm install
+# or
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Running Locally
+To launch the hot-reloading development server:
+```bash
+pnpm dev
+# or
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Build and Compilation Check
+To compile the site and run type validation:
+```bash
+pnpm build
+# or
+npm run build
+```
