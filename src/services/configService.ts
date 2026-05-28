@@ -22,11 +22,11 @@ export const configService = {
    * Discord white-listed usernames for Admin Panel access.
    */
   getDiscordWhitelist: (): string[] => {
-    const whitelistStr = process.env.NEXT_PUBLIC_DISCORD_WHITELIST || "";
+    const whitelistStr = process.env.DISCORD_WHITE_LIST || "";
     return whitelistStr
       .split(",")
-      .map((username) => username.trim())
-      .filter((username) => username.length > 0);
+      .map((item) => item.trim().replace(/^["']|["']$/g, ""))
+      .filter((item) => item.length > 0);
   },
 
   /**
