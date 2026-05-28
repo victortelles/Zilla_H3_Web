@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,13 +9,25 @@ import { SiBlender, SiVrchat } from "react-icons/si";
 import Button from "../ui/button/Button";
 import StatusBadge from "../ui/statusBadge/StatusBadge";
 import { configService } from "@/services/configService";
+import { CommissionStatus } from "@/types/ui/statusBadge/StatusBadge.types";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const commissionStatus = configService.getCommissionStatus();
+  const [commissionStatus, setCommissionStatus] = useState<CommissionStatus>("available");
   const telegramUrl = configService.getContactTelegram();
+
+  useEffect(() => {
+    fetch("/api/config")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.commissionStatus) {
+          setCommissionStatus(data.commissionStatus as CommissionStatus);
+        }
+      })
+      .catch((err) => console.error("Failed to load commission status dynamically:", err));
+  }, []);
 
   useGSAP(() => {
     // Scroll triggered animations
