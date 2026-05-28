@@ -1,0 +1,1 @@
+This is folder where save image project uploaded by the admin, 
