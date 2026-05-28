@@ -53,8 +53,7 @@ export default function Footer() {
     {
       title: "Legal",
       links: [
-        { name: "Terms of Service", href: "#" },
-        { name: "Privacy Policy", href: "#" },
+        { name: "Terms of Service", href: "/terms-conditions" },
       ],
     },
   ];
