@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Preloader from "./Preloader";
 import Navbar from "../ui/navbar/Navbar";
 import Hero from "./Hero";
@@ -12,8 +12,32 @@ import Footer from "../ui/footer/Footer";
 export default function LandingPageWrapper() {
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    try {
+      const lastShown = localStorage.getItem("zilla_preloader_last_shown");
+      if (lastShown) {
+        const timePassed = Date.now() - parseInt(lastShown, 10);
+        const TWO_HOURS_IN_MS = 2 * 60 * 60 * 1000;
+        if (timePassed < TWO_HOURS_IN_MS) {
+          setIsLoading(false);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to read preloader storage status:", e);
+    }
+  }, []);
+
+  const handlePreloaderComplete = () => {
+    try {
+      localStorage.setItem("zilla_preloader_last_shown", Date.now().toString());
+    } catch (e) {
+      console.error("Failed to write preloader storage status:", e);
+    }
+    setIsLoading(false);
+  };
+
   if (isLoading) {
-    return <Preloader onComplete={() => setIsLoading(false)} />;
+    return <Preloader onComplete={handlePreloaderComplete} />;
   }
 
   return (
