@@ -1,17 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  FaCloudUploadAlt,
-  FaSpinner,
-  FaPlus,
-  FaChevronDown,
-  FaChevronUp,
-  FaTimes,
-  FaCheck,
-} from "react-icons/fa";
+import { FaSpinner, FaPlus } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/ui/button/Button";
+import { SpeciesSelect, TagsSelect, ImageUpload } from "./forms";
 
 interface ProjectUploadFormProps {
   onProjectAdded: () => void;
@@ -262,83 +255,17 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
             />
           </div>
 
-          {/* Species Select Dropdown */}
-          <div className="space-y-1.5 relative" ref={speciesRef}>
-            <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-              Species *
-            </label>
-            <button
-              type="button"
-              onClick={() => setIsSpeciesDropdownOpen(!isSpeciesDropdownOpen)}
-              className="w-full h-11 px-4 text-sm rounded-xl border border-border bg-muted/20 text-foreground focus:border-primary focus:outline-none transition-colors flex items-center justify-between font-body cursor-pointer"
-            >
-              <span className={selectedSpecies ? "text-foreground font-medium" : "text-muted-foreground"}>
-                {selectedSpecies === "other"
-                  ? "Other (Write in)"
-                  : selectedSpecies || "Select species..."}
-              </span>
-              {isSpeciesDropdownOpen ? (
-                <FaChevronUp className="text-muted-foreground w-3 h-3" />
-              ) : (
-                <FaChevronDown className="text-muted-foreground w-3 h-3" />
-              )}
-            </button>
-
-            {isSpeciesDropdownOpen && (
-              <div className="absolute left-0 right-0 mt-1 max-h-56 overflow-y-auto rounded-xl border border-border bg-card shadow-lg z-50 p-1.5 space-y-0.5">
-                {speciesList.map((sp) => (
-                  <button
-                    key={sp}
-                    type="button"
-                    onClick={() => {
-                      setSelectedSpecies(sp);
-                      setIsSpeciesDropdownOpen(false);
-                    }}
-                    className={`w-full text-left rounded-lg px-3 py-2 text-sm transition-colors cursor-pointer ${
-                      selectedSpecies === sp
-                        ? "bg-primary text-primary-foreground font-bold"
-                        : "hover:bg-muted text-foreground"
-                    }`}
-                  >
-                    {sp}
-                  </button>
-                ))}
-                <div className="border-t border-border my-1" />
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedSpecies("other");
-                    setIsSpeciesDropdownOpen(false);
-                  }}
-                  className={`w-full text-left rounded-lg px-3 py-2 text-sm transition-colors cursor-pointer ${
-                    selectedSpecies === "other"
-                      ? "bg-primary text-primary-foreground font-bold"
-                      : "hover:bg-muted text-foreground"
-                  }`}
-                >
-                  Other (Specify custom species)
-                </button>
-              </div>
-            )}
-          </div>
+          <SpeciesSelect
+            speciesList={speciesList}
+            selectedSpecies={selectedSpecies}
+            setSelectedSpecies={setSelectedSpecies}
+            customSpecies={customSpecies}
+            setCustomSpecies={setCustomSpecies}
+            isDropdownOpen={isSpeciesDropdownOpen}
+            setIsDropdownOpen={setIsSpeciesDropdownOpen}
+            dropdownRef={speciesRef}
+          />
         </div>
-
-        {/* Custom Species Input (if Other selected) */}
-        {selectedSpecies === "other" && (
-          <div className="space-y-1.5 animate-fade-in">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-primary">
-              Specify Custom Species *
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. Avali, Protogen, Dragon"
-              value={customSpecies}
-              onChange={(e) => setCustomSpecies(e.target.value)}
-              className="w-full h-11 px-4 text-sm rounded-xl border border-primary bg-muted/20 text-foreground focus:border-primary focus:outline-none transition-colors font-body"
-            />
-          </div>
-        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Poly Count */}
@@ -355,103 +282,17 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
             />
           </div>
 
-          {/* Tags Dropdown Multi-Select */}
-          <div className="space-y-1.5 relative" ref={tagsRef}>
-            <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground flex justify-between">
-              <span>Specification Tags</span>
-              <span className="text-[9px] text-muted-foreground font-normal">
-                {selectedTags.length} selected
-              </span>
-            </label>
-            
-            <button
-              type="button"
-              onClick={() => setIsTagsDropdownOpen(!isTagsDropdownOpen)}
-              className="w-full min-h-[44px] py-2 px-4 text-sm rounded-xl border border-border bg-muted/20 text-foreground focus:border-primary focus:outline-none transition-colors flex items-center justify-between font-body cursor-pointer"
-            >
-              <div className="flex flex-wrap gap-1 max-w-[90%] text-left">
-                {selectedTags.length === 0 ? (
-                  <span className="text-muted-foreground">Select tags...</span>
-                ) : (
-                  selectedTags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center gap-1.5 bg-primary/10 text-primary border border-primary/20 text-xs font-semibold px-2.5 py-1 rounded-lg"
-                    >
-                      {tag}
-                      <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleToggleTag(tag);
-                        }}
-                        className="hover:text-destructive cursor-pointer font-bold"
-                      >
-                        <FaTimes className="w-2.5 h-2.5" />
-                      </span>
-                    </span>
-                  ))
-                )}
-              </div>
-              {isTagsDropdownOpen ? (
-                <FaChevronUp className="text-muted-foreground w-3 h-3 flex-shrink-0 ml-2" />
-              ) : (
-                <FaChevronDown className="text-muted-foreground w-3 h-3 flex-shrink-0 ml-2" />
-              )}
-            </button>
-
-            {isTagsDropdownOpen && (
-              <div className="absolute left-0 right-0 mt-1 max-h-72 overflow-y-auto rounded-xl border border-border bg-card shadow-lg z-50 p-2.5 space-y-2 flex flex-col justify-between">
-                <div className="overflow-y-auto max-h-48 space-y-0.5">
-                  {tagsList.map((tag) => {
-                    const isChecked = selectedTags.includes(tag);
-                    return (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => handleToggleTag(tag)}
-                        className={`w-full text-left rounded-lg px-2.5 py-1.5 text-sm transition-colors flex items-center justify-between cursor-pointer ${
-                          isChecked
-                            ? "bg-primary/10 text-primary font-semibold"
-                            : "hover:bg-muted text-foreground"
-                        }`}
-                      >
-                        <span>{tag}</span>
-                        {isChecked && <FaCheck className="w-2.5 h-2.5 text-primary" />}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="border-t border-border pt-2.5 mt-1 space-y-1.5">
-                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
-                    Add Custom Specification
-                  </span>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="e.g. LipSync"
-                      value={newCustomTag}
-                      onChange={(e) => setNewCustomTag(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          handleAddCustomTag();
-                        }
-                      }}
-                      className="flex-1 h-9 px-3 text-sm rounded-lg border border-border bg-muted/10 text-foreground focus:outline-none focus:border-primary font-body"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddCustomTag}
-                      className="h-9 px-3 rounded-lg bg-primary text-primary-foreground hover:opacity-90 flex items-center justify-center font-bold text-xs cursor-pointer"
-                    >
-                      <FaPlus className="w-2.5 h-2.5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <TagsSelect
+            tagsList={tagsList}
+            selectedTags={selectedTags}
+            newCustomTag={newCustomTag}
+            setNewCustomTag={setNewCustomTag}
+            isDropdownOpen={isTagsDropdownOpen}
+            setIsDropdownOpen={setIsTagsDropdownOpen}
+            dropdownRef={tagsRef}
+            onToggleTag={handleToggleTag}
+            onAddCustomTag={handleAddCustomTag}
+          />
         </div>
 
         {/* External Redirect Link */}
@@ -484,55 +325,15 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
         </div>
 
         {/* Drag and Drop Image Box */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-            Avatar Image Asset * (Max 10MB, PNG/JPEG/WEBP)
-          </label>
-          
-          <div
-            onDragEnter={handleDrag}
-            onDragOver={handleDrag}
-            onDragLeave={handleDrag}
-            onDrop={handleDrop}
-            onClick={triggerFileSelect}
-            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all flex flex-col items-center justify-center min-h-[160px] ${
-              dragActive
-                ? "border-primary bg-primary/5"
-                : "border-border bg-muted/10 hover:border-primary/40 hover:bg-muted/20"
-            }`}
-          >
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-
-            {imagePreview ? (
-              <div className="relative group max-w-xs rounded-lg overflow-hidden border border-border shadow-sm">
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="max-h-36 w-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold">
-                  Change Image
-                </div>
-              </div>
-            ) : (
-              <>
-                <FaCloudUploadAlt className="w-10 h-10 text-muted-foreground/60 mb-2" />
-                <span className="text-xs font-bold text-foreground">
-                  Drag and drop file here, or click to upload
-                </span>
-                <span className="text-[10px] text-muted-foreground mt-1 leading-normal">
-                  PNG, JPEG, WEBP files up to 10MB
-                </span>
-              </>
-            )}
-          </div>
-        </div>
+        <ImageUpload
+          imagePreview={imagePreview}
+          dragActive={dragActive}
+          onDrag={handleDrag}
+          onDrop={handleDrop}
+          onChange={handleFileChange}
+          triggerFileSelect={triggerFileSelect}
+          fileInputRef={fileInputRef}
+        />
 
         <div className="pt-2 flex justify-end">
           <Button
