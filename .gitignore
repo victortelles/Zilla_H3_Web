@@ -1,6 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .agents/*
 
+# project
+public/project/*.png
+public/project/*.jpg
+public/project/*.jpeg
+public/project/*.webp
+
 # dependencies
 /node_modules
 /.pnp
