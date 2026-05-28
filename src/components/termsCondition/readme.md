@@ -1,0 +1,1 @@
+Aquí van los componentes que conforman el apartado de ToS. (Terminos y Condiciones).
