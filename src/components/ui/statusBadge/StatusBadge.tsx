@@ -6,8 +6,8 @@ export default function StatusBadge({ status, className = "" }: StatusBadgeProps
   const configs = {
     available: {
       text: "Commissions: Open",
-      bgClass: "bg-emerald-500/10 dark:bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400",
-      dotClass: "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse",
+      bgClass: "bg-success/10 border-success/30 text-success",
+      dotClass: "bg-success shadow-[0_0_8px_var(--success)] animate-pulse",
     },
     busy: {
       text: "Commissions: Busy",
@@ -16,8 +16,8 @@ export default function StatusBadge({ status, className = "" }: StatusBadgeProps
     },
     closed: {
       text: "Commissions: Closed",
-      bgClass: "bg-rose-500/10 dark:bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400",
-      dotClass: "bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]",
+      bgClass: "bg-destructive/10 border-destructive/30 text-destructive",
+      dotClass: "bg-destructive shadow-[0_0_8px_var(--destructive)]",
     },
   };
 
