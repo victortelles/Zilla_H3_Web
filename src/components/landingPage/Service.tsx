@@ -61,20 +61,17 @@ export default function Service() {
     // Use MatchMedia to toggle pinning based on screen width
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
-      // Calculate how much we need to scroll horizontally
-      const scrollAmount = track.offsetWidth - container.offsetWidth;
-
+    mm.add("(min-width: 1024px)", () => {
       // Pin the outer container and scroll the inner track horizontally
       const pinTrigger = gsap.to(track, {
-        x: -scrollAmount,
+        x: () => -(track.offsetWidth - container.offsetWidth),
         ease: "none",
         scrollTrigger: {
           trigger: container,
           pin: true,
           scrub: 1,
           start: "top top",
-          end: () => `+=${scrollAmount * 2.2}`,
+          end: () => "+=" + Math.max(1200, window.innerHeight * 1.5),
           invalidateOnRefresh: true,
         },
       });
@@ -109,7 +106,7 @@ export default function Service() {
     <section 
       id="services" 
       ref={containerRef}
-      className="relative bg-background border-b border-border overflow-hidden md:h-screen flex flex-col justify-center py-20 md:py-0"
+      className="relative bg-background border-b border-border overflow-hidden lg:h-screen flex flex-col justify-center py-20 lg:py-0"
     >
       {/* Background decoration */}
       <div className="absolute right-[-5%] bottom-[10%] w-[400px] h-[400px] rounded-full bg-secondary/5 dark:bg-secondary/5 blur-3xl pointer-events-none" />
@@ -128,7 +125,7 @@ export default function Service() {
       </div>
 
       {/* Scroll Wrapper */}
-      <div className="services-scroll-wrapper w-full overflow-x-auto md:overflow-x-hidden scrollbar-none">
+      <div className="services-scroll-wrapper w-full overflow-x-auto lg:overflow-x-hidden scrollbar-none">
         <div 
           ref={trackRef}
           className="services-horizontal-track pb-6 md:pb-0"

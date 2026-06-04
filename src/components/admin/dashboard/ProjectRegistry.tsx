@@ -20,7 +20,11 @@ function ProjectRegistryCard({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const textLimit = 120;
-  const isLongText = project.description.length > textLimit;
+  
+  if (!project) return null;
+
+  const descriptionText = project.description || "";
+  const isLongText = descriptionText.length > textLimit;
 
   return (
     <div className="rounded-2xl border border-border bg-card shadow-sm p-4 hover:border-primary/20 transition-all flex flex-col justify-between h-fit">
@@ -28,12 +32,12 @@ function ProjectRegistryCard({
         {/* Image display */}
         <div className="relative aspect-video rounded-xl bg-muted border border-border/60 overflow-hidden shadow-inner">
           <img
-            src={project.image}
-            alt={project.name}
+            src={project.image || "/resources/logo.png"}
+            alt={project.name || "Project Image"}
             className="w-full h-full object-cover"
           />
           <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-background/80 backdrop-blur-sm border border-border/80 text-[9px] font-bold text-foreground">
-            {project.species}
+            {project.species || "Unspecified"}
           </span>
 
           {/* External redirection link icon (top right corner) */}
@@ -52,7 +56,7 @@ function ProjectRegistryCard({
 
         <div className="space-y-1">
           <h3 className="font-display font-bold text-base text-foreground">
-            {project.name}
+            {project.name || "Untitled Creation"}
           </h3>
           <div className="relative text-left font-body text-[11px] text-muted-foreground leading-relaxed">
             <div className="relative">
@@ -87,7 +91,7 @@ function ProjectRegistryCard({
 
         {/* Meta info tags */}
         <div className="flex flex-wrap gap-1.5">
-          {project.tags.map((tag, idx) => (
+          {(project.tags || []).map((tag, idx) => (
             <span
               key={idx}
               className="text-xs px-2 py-0.5 rounded-md bg-muted border border-border text-muted-foreground font-semibold"
@@ -158,11 +162,11 @@ export default function ProjectRegistry({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <ProjectRegistryCard
-              key={project.id}
+              key={project.id || index}
               project={project}
-              onDelete={() => onDeleteProject(project.id, project.name)}
+              onDelete={() => onDeleteProject(project.id || "", project.name || "")}
             />
           ))}
         </div>

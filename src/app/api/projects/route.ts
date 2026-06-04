@@ -20,7 +20,11 @@ async function readProjects(): Promise<ProjectItem[]> {
 
 export async function GET() {
   const projects = await readProjects();
-  return NextResponse.json(projects, { status: 200 });
+  // Filter out empty or malformed projects (e.g. manually modified database file)
+  const validProjects = projects.filter(
+    (p) => p && typeof p === "object" && p.id && p.name && p.description
+  );
+  return NextResponse.json(validProjects, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {

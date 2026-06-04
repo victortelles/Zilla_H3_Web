@@ -7,21 +7,26 @@ import { Project } from "@/types/project/Project.types";
 
 interface ProjectCardProps {
   project: Project;
+  className?: string;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, className = "h-fit" }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const textLimit = 120;
-  const isLongText = project.description.length > textLimit;
+  
+  if (!project) return null;
+
+  const descriptionText = project.description || "";
+  const isLongText = descriptionText.length > textLimit;
 
   return (
-    <div className="portfolio-project-card group/card rounded-3xl border border-border bg-card p-4 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 flex flex-col justify-between h-fit">
+    <div className={`portfolio-project-card group/card rounded-3xl border border-border bg-card p-4 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 flex flex-col justify-between ${className}`}>
       <div>
         {/* Image container */}
         <div className="relative aspect-[4/3] w-full rounded-2xl bg-muted border border-border/60 overflow-hidden shadow-inner flex items-center justify-center">
           <img
-            src={project.image}
-            alt={project.name}
+            src={project.image || "/resources/logo.png"}
+            alt={project.name || "Project Image"}
             className="w-full h-full object-cover group-hover/card:scale-[1.03] transition-transform duration-500"
           />
 
@@ -30,7 +35,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Species Badge */}
           <div className="absolute top-3 left-3 px-2.5 py-1 rounded-xl bg-background/85 backdrop-blur-md border border-border/80 flex items-center gap-1.5 text-[9px] font-bold text-foreground shadow-sm uppercase tracking-wider font-body">
-            <FaStar className="text-amber-500 w-3 h-3" /> {project.species}
+            <FaStar className="text-amber-500 w-3 h-3" /> {project.species || "Unspecified"}
           </div>
 
           {/* External redirection link icon (top right corner) */}
@@ -52,10 +57,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <div className="flex justify-between items-start gap-2">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground font-body">
-                By {project.creator}
+                By {project.creator || "ZILLA_H3"}
               </span>
               <h3 className="font-display font-bold text-xl text-foreground mt-0.5 group-hover/card:text-primary transition-colors">
-                {project.name}
+                {project.name || "Untitled Creation"}
               </h3>
             </div>
             <span className="text-[9px] font-mono font-bold px-2 py-1 rounded-lg bg-muted border border-border text-foreground tracking-tight whitespace-nowrap shadow-sm">
@@ -70,7 +75,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               className="overflow-hidden font-body text-xs text-muted-foreground leading-relaxed relative text-left"
             >
-              <p>{project.description}</p>
+              <p>{project.description || "No description provided."}</p>
               {isLongText && !isExpanded && (
                 <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-card to-transparent pointer-events-none" />
               )}
@@ -95,7 +100,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Tags footer (Removed line divider and spacing, enlarged tags text size) */}
       <div className="mt-3 flex flex-wrap gap-1.5">
-        {project.tags.map((tag, idx) => (
+        {(project.tags || []).map((tag, idx) => (
           <span
             key={idx}
             className="text-xs font-semibold px-2 py-0.5 rounded-md bg-muted/60 border border-border text-muted-foreground hover:border-primary/20 hover:text-foreground transition-all cursor-default font-body"

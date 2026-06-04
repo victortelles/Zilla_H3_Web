@@ -11,6 +11,7 @@ import Button from "@/components/ui/button/Button";
 import Pagination from "@/components/ui/pagination/Pagination";
 import ProjectCard from "./ProjectCard";
 import { Project } from "@/types/project/Project.types";
+import EmptyState from "@/components/ui/emptyState/EmptyState";
 
 gsap.registerPlugin(useGSAP);
 
@@ -139,25 +140,19 @@ export default function ProjectPortfolio() {
             </span>
           </div>
         ) : projects.length === 0 ? (
-          <div className="py-20 border border-dashed border-border rounded-3xl text-center space-y-4 bg-card/20 backdrop-blur-sm max-w-xl mx-auto">
-            <FaInfoCircle className="w-10 h-10 text-muted-foreground/60 mx-auto" />
-            <div className="space-y-1">
-              <h3 className="font-display font-bold text-lg text-foreground uppercase">
-                No Projects Found
-              </h3>
-              <p className="font-body text-xs text-muted-foreground max-w-xs mx-auto leading-relaxed">
-                The database registry is currently empty. Check back later or sign in to upload new creations.
-              </p>
-            </div>
-          </div>
+          <EmptyState
+            title="No Projects Found"
+            description="The database registry is currently empty. Check back later or sign in to upload new creations."
+            tagText="Database Registry"
+          />
         ) : (
           <div className="space-y-12">
             <div
               ref={gridRef}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start scroll-mt-20"
             >
-              {visibleProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+              {visibleProjects.map((project, index) => (
+                <ProjectCard key={project.id || index} project={project} />
               ))}
             </div>
 
