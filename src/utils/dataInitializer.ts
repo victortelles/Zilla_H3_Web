@@ -35,30 +35,6 @@ export async function ensureDataFilesExist() {
     // 3. Ensure the project uploads directory exists inside the volume
     const volumeUploadsDir = path.join(DATA_DIR, "project");
     await fs.mkdir(volumeUploadsDir, { recursive: true });
-
-    // 4. Ensure a symlink/junction exists at public/project pointing to the volume directory
-    const publicProjectDir = path.join(process.cwd(), "public", "project");
-    try {
-      const stats = await fs.lstat(publicProjectDir);
-      if (!stats.isSymbolicLink()) {
-        // If it exists as a normal folder, recreate as a symlink in production or Railway
-        if (process.env.NODE_ENV === "production" || process.env.RAILWAY_ENVIRONMENT) {
-          console.log(`[Data Initializer] public/project is a physical directory in production. Replacing with symlink...`);
-          await fs.rm(publicProjectDir, { recursive: true, force: true });
-          await fs.symlink(volumeUploadsDir, publicProjectDir, "junction");
-        }
-      }
-    } catch {
-      // Doesn't exist at all, create it as a symlink/junction
-      console.log(`[Data Initializer] Creating symlink from ${publicProjectDir} to ${volumeUploadsDir}`);
-      try {
-        await fs.mkdir(path.dirname(publicProjectDir), { recursive: true });
-        const type = process.platform === "win32" ? "junction" : "dir";
-        await fs.symlink(volumeUploadsDir, publicProjectDir, type);
-      } catch (symlinkError) {
-        console.error("[Data Initializer] Failed to create symlink:", symlinkError);
-      }
-    }
   } catch (dirError) {
     console.error("[Data Initializer] Failed to ensure data directory exists:", dirError);
   }

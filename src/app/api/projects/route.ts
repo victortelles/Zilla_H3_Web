@@ -7,7 +7,7 @@ import { ProjectItem } from "@/components/project";
 import { ensureDataFilesExist } from "@/utils/dataInitializer";
 
 const projectDataPath = path.join(process.cwd(), "data", "project.json");
-const uploadDir = path.join(process.cwd(), "public", "project");
+const uploadDir = path.join(process.cwd(), "data", "project");
 
 // Read helper
 async function readProjects(): Promise<ProjectItem[]> {
@@ -206,7 +206,8 @@ export async function DELETE(request: NextRequest) {
     // 3. Delete image file associated
     const imageRelativePath = projectToDelete.image; // e.g. "/project/name-date.png"
     if (imageRelativePath && imageRelativePath.startsWith("/project/")) {
-      const fullImagePath = path.join(process.cwd(), "public", imageRelativePath);
+      const filename = path.basename(imageRelativePath);
+      const fullImagePath = path.join(uploadDir, filename);
       try {
         await fs.unlink(fullImagePath);
       } catch (err) {
