@@ -4,7 +4,9 @@ import { configService } from "@/services/configService";
 import { encryptSession } from "@/services/session";
 
 export async function GET(request: NextRequest) {
-  const origin = request.nextUrl.origin;
+  const host = request.headers.get("x-forwarded-host") || request.nextUrl.host;
+  const proto = request.headers.get("x-forwarded-proto") || "https";
+  const origin = `${proto}://${host}`;
   const searchParams = request.nextUrl.searchParams;
   const code = searchParams.get("code");
   const error = searchParams.get("error");
