@@ -37,7 +37,6 @@ export default function Footer() {
       links: [
         { name: "About", href: "/#about" },
         { name: "Services", href: "/#services" },
-        { name: "Gallery", href: "/#gallery" },
         { name: "All Projects", href: "/project" },
         { name: "Admin Dashboard", href: "/api/auth/discord/login" },
       ],
