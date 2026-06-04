@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { ensureDataFilesExist } from "@/utils/dataInitializer";
 
 const speciesDataPath = path.join(process.cwd(), "data", "species.json");
 
 export async function GET() {
+  await ensureDataFilesExist();
   try {
     const data = await fs.readFile(speciesDataPath, "utf-8");
     const species = JSON.parse(data) as string[];

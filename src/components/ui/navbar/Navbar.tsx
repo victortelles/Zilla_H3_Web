@@ -40,7 +40,7 @@ export default function Navbar() {
               className="h-9 w-9 object-contain transition-all duration-300 group-hover:scale-105"
             />
             <span className="font-display font-bold text-xl tracking-tight text-foreground transition-colors group-hover:text-primary">
-              ZILLA<span className="font-light text-muted-foreground group-hover:text-primary/70">_H3</span>
+              ZILLA<span className="font-light text-muted-foreground group-hover:text-primary/70">_ZH3</span>
             </span>
           </Link>
         </div>

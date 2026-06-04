@@ -71,7 +71,7 @@ export default function Footer() {
                 className="h-9 w-9 object-contain"
               />
               <span className="font-display font-bold text-xl tracking-tight text-foreground">
-                ZILLA<span className="font-light text-muted-foreground">_H3</span>
+                ZILLA<span className="font-light text-muted-foreground">_ZH3</span>
               </span>
             </div>
             <p className="max-w-xs text-sm text-muted-foreground leading-relaxed">
@@ -136,7 +136,7 @@ export default function Footer() {
         <div className="mt-4 border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-4 text-xs text-muted-foreground text-center md:text-left">
             <p>
-              &copy; {currentYear} Zilla_H3.
+              &copy; {currentYear} Zilla_ZH3.
             </p>
 
           </div>

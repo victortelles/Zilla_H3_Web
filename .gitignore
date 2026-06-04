@@ -6,6 +6,7 @@ public/project/*.png
 public/project/*.jpg
 public/project/*.jpeg
 public/project/*.webp
+data/
 
 # dependencies
 /node_modules

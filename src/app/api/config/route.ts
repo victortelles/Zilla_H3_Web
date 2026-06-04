@@ -3,11 +3,13 @@ import { cookies } from "next/headers";
 import fs from "fs/promises";
 import path from "path";
 import { decryptSession } from "@/services/session";
+import { ensureDataFilesExist } from "@/utils/dataInitializer";
 
 const configPath = path.join(process.cwd(), "data", "config.json");
 
 // Read helper
 async function readConfig() {
+  await ensureDataFilesExist();
   try {
     const data = await fs.readFile(configPath, "utf-8");
     return JSON.parse(data) as { commissionStatus: string };

@@ -4,12 +4,14 @@ import fs from "fs/promises";
 import path from "path";
 import { decryptSession } from "@/services/session";
 import { ProjectItem } from "@/components/project";
+import { ensureDataFilesExist } from "@/utils/dataInitializer";
 
 const projectDataPath = path.join(process.cwd(), "data", "project.json");
 const uploadDir = path.join(process.cwd(), "public", "project");
 
 // Read helper
 async function readProjects(): Promise<ProjectItem[]> {
+  await ensureDataFilesExist();
   try {
     const data = await fs.readFile(projectDataPath, "utf-8");
     return JSON.parse(data) as ProjectItem[];
