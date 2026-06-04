@@ -149,9 +149,9 @@ export default function Footer() {
               <FaDiscord className="h-3.5 w-3.5 text-primary" /> Admin Access
             </a>
             <span className="hidden sm:inline text-border">|</span>
-            <a href="#" className="hover:text-primary transition-colors">
+            <Link href="/credits" className="hover:text-primary transition-colors">
               Credits
-            </a>
+            </Link>
             <span className="hidden sm:inline text-border">|</span>
             <a
               href="https://github.com/victortelles"
