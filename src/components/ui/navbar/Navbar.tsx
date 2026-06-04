@@ -34,9 +34,11 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground font-display font-black text-xl transition-all duration-300 group-hover:scale-105 shadow-sm">
-              Z
-            </div>
+            <img
+              src="/resources/logo.png"
+              alt="Zilla_H3 Logo"
+              className="h-9 w-9 object-contain transition-all duration-300 group-hover:scale-105"
+            />
             <span className="font-display font-bold text-xl tracking-tight text-foreground transition-colors group-hover:text-primary">
               ZILLA<span className="font-light text-muted-foreground group-hover:text-primary/70">_H3</span>
             </span>

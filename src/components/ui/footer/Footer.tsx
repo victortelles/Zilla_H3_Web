@@ -5,6 +5,7 @@ import { FaDiscord, FaTelegramPlane, FaVrCardboard, FaGithub } from "react-icons
 import { FaXTwitter } from "react-icons/fa6";
 import { FooterColumn, FooterSocial } from "@/types/ui/footer/Footer.types";
 import { configService } from "@/services/configService";
+import ChibiContainer from "./ChibiContainer";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -65,9 +66,11 @@ export default function Footer() {
           {/* Logo and Info */}
           <div className="space-y-8 xl:col-span-1 text-left">
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground font-display font-black text-xl">
-                Z
-              </div>
+              <img
+                src="/resources/logo.png"
+                alt="Zilla_H3 Logo"
+                className="h-9 w-9 object-contain"
+              />
               <span className="font-display font-bold text-xl tracking-tight text-foreground">
                 ZILLA<span className="font-light text-muted-foreground">_H3</span>
               </span>
@@ -127,8 +130,11 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Chibis showcase bar */}
+        <ChibiContainer />
+
         {/* Bottom bar */}
-        <div className="mt-12 border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-4 border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-4 text-xs text-muted-foreground text-center md:text-left">
             <p>
               &copy; {currentYear} Zilla_H3.
