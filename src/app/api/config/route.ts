@@ -4,7 +4,7 @@ import fs from "fs/promises";
 import path from "path";
 import { decryptSession } from "@/services/session";
 
-const configPath = path.join(process.cwd(), "src", "data", "config.json");
+const configPath = path.join(process.cwd(), "data", "config.json");
 
 // Read helper
 async function readConfig() {

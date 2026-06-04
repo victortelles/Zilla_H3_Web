@@ -5,7 +5,7 @@ import path from "path";
 import { decryptSession } from "@/services/session";
 import { ProjectItem } from "@/components/project";
 
-const projectDataPath = path.join(process.cwd(), "src", "data", "project.json");
+const projectDataPath = path.join(process.cwd(), "data", "project.json");
 const uploadDir = path.join(process.cwd(), "public", "project");
 
 // Read helper
@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Update species list in species.json if new
-    const speciesDataPath = path.join(process.cwd(), "src", "data", "species.json");
+    const speciesDataPath = path.join(process.cwd(), "data", "species.json");
     try {
       const speciesData = await fs.readFile(speciesDataPath, "utf-8");
       const speciesList = JSON.parse(speciesData) as string[];
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Update tags list in tags.json if new
-    const tagsDataPath = path.join(process.cwd(), "src", "data", "tags.json");
+    const tagsDataPath = path.join(process.cwd(), "data", "tags.json");
     try {
       const tagsData = await fs.readFile(tagsDataPath, "utf-8");
       const tagsList = JSON.parse(tagsData) as string[];

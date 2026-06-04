@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-const speciesDataPath = path.join(process.cwd(), "src", "data", "species.json");
+const speciesDataPath = path.join(process.cwd(), "data", "species.json");
 
 export async function GET() {
   try {
