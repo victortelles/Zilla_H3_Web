@@ -75,7 +75,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="max-w-xs text-sm text-muted-foreground leading-relaxed">
-              Premium avatar creation and design services for the H3 ecosystem. Bring your virtual identity to life with high fidelity textures, garments, and interactions.
+              Creating artwork with VRChat avatars, texturing, clothing adaptations, rigging and optimization.
             </p>
             <div className="flex space-x-5">
               {socialLinks.map((social) => (

@@ -77,12 +77,12 @@ export default function Hero() {
         </div>
 
         <h1 className="hero-fade-up text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05]">
-          Premium Virtual <br />
-          <span className="text-primary transition-colors duration-300">Identity Design</span>
+          Zilla-ZH3 <br />
+          <span className="text-primary transition-colors duration-300">Works</span>
         </h1>
 
         <p className="hero-fade-up lead text-muted-foreground text-base sm:text-xl max-w-2xl leading-relaxed">
-          Specializing in high-fidelity VRChat avatar creation, custom texturing, detailed clothing adaptations, and full rigging optimization. Let’s make you stand out in the virtual worlds.
+          Creating artwork with VRChat avatars, texturing, clothing adaptations, rigging and optimization.
         </p>
 
         <div className="hero-fade-up flex flex-wrap gap-4 justify-center pt-4">

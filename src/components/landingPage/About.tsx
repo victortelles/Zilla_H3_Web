@@ -4,12 +4,13 @@ import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaTelegramPlane, FaTools, FaCheckCircle, FaStar, FaPaintBrush } from "react-icons/fa";
+import { FaTelegramPlane, FaCheckCircle, FaStar, FaPaintBrush } from "react-icons/fa";
 import { SiBlender, SiVrchat } from "react-icons/si";
 import Button from "../ui/button/Button";
 import StatusBadge from "../ui/statusBadge/StatusBadge";
 import { configService } from "@/services/configService";
 import { CommissionStatus } from "@/types/ui/statusBadge/StatusBadge.types";
+import { FaUserPen } from "react-icons/fa6";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -79,27 +80,27 @@ export default function About() {
         {/* Left Side: Copywriting */}
         <div className="lg:col-span-7 flex flex-col space-y-6">
           <div className="about-animate-left inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
-            <FaTools className="w-3.5 h-3.5" /> Who is Zilla_H3?
+            <FaUserPen className="w-3.5 h-3.5" /> Hi!, I'm Zilla-ZH3
           </div>
 
           <h2 className="about-animate-left text-3xl sm:text-4xl font-black tracking-tight leading-tight">
-            Crafting Digital Identities <br />
-            For The Metaverse
+            Bringing Avatars to Life <br />
+            With Custom Textures & Style
           </h2>
 
           <p className="about-animate-left text-muted-foreground leading-relaxed text-base sm:text-lg">
-            I am a dedicated virtual designer specializing in custom VRChat avatar creations and texturing. With extensive experience in Unity setup, avatar physics (PhysBones), and clothing adaptations, I transform conceptual styles into fully optimized 3D digital creations.
+            I'm an avatar creator, or avatar modifier, I actually have some experience to do a little of everything, but I'm specialized to texturing avatars!
           </p>
 
           {/* Checklist */}
           <div className="about-animate-left grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             {[
-              "Highly optimized VRChat models",
-              "Unity setup & packaging ready",
-              "Clean custom UV mapping",
-              "Accessory rigging & weighting",
-              "Dynamic PhysBones settings",
-              "Quest compatibility exports",
+              "Optimized avatars",
+              "Rigging clothing",
+              "PhysBones config",
+              "Unity w/ Prefab",
+              "Accessories",
+              "Advanced texturing",
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-3 text-sm text-foreground/80 font-medium">
                 <FaCheckCircle className="text-primary h-4.5 w-4.5 shrink-0" />
@@ -171,17 +172,32 @@ export default function About() {
               </div>
             </div>
 
-            {/* Specification Tags */}
-            <div className="flex flex-wrap gap-1.5 justify-center mb-5">
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border">
-                VRChat SDK3
-              </span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border">
-                Quest-Ready
-              </span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20">
-                PhysBones
-              </span>
+            <div className="w-full border-border/50 mt-2 mb-5">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/80 mb-2.5 text-center">
+                Skills & Tech Stack
+              </div>
+              <div className="flex flex-wrap gap-1.5 justify-center">
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground border border-border transition-colors hover:bg-muted/80">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#1fd1ec]" />
+                  VRChat SDK3
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground border border-border transition-colors hover:bg-muted/80">
+                  <span className="w-1.5 h-1.5 rounded-full bg-success" />
+                  PC & Quest Ready
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 transition-colors hover:bg-primary/15">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff0000]" />
+                  Substance 3D
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 transition-colors hover:bg-primary/15">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ea7600]" />
+                  Blender
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 transition-colors hover:bg-primary/15">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Unity
+                </span>
+              </div>
             </div>
 
             {/* Availability Container underneath */}

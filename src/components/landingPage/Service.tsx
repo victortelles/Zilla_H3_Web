@@ -1,25 +1,20 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaPaintBrush, FaCrown, FaTshirt, FaRunning } from "react-icons/fa";
+import { FaPaintBrush, FaCrown, FaTshirt, FaRunning, FaHammer, FaEye } from "react-icons/fa";
+import { ServiceItem } from "@/types/landingPage/service";
+import Lightbox from "@/components/ui/lightbox/Lightbox";
 import "@/styles/services.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-interface ServiceItem {
-  id: string;
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-  bgColor: string;
-}
-
 export default function Service() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
   const services: ServiceItem[] = [
     {
@@ -28,6 +23,7 @@ export default function Service() {
       title: "Avatar Texturing",
       desc: "Tailored custom maps (Albedo, Normal, Metallic, Roughness) designed to give your avatar distinct personality and texture fidelity.",
       bgColor: "bg-primary/5 border-primary/20",
+      image: "/resources/services/ATexturing.png",
     },
     {
       id: "accessories",
@@ -35,6 +31,7 @@ export default function Service() {
       title: "Accessory Integration",
       desc: "Weighting, rigging, and parenting wings, weapons, glasses, and dynamic jewelry perfectly mapped to your avatar's bone structure.",
       bgColor: "bg-amber-500/5 border-amber-500/20",
+      image: "/resources/services/AIntegration.png",
     },
     {
       id: "clothing",
@@ -42,6 +39,7 @@ export default function Service() {
       title: "Clothing Adaptation",
       desc: "Refitting external garments, shirts, hoodies, shoes, and armor to seamlessly match your specific base model with zero mesh clip.",
       bgColor: "bg-emerald-500/5 border-emerald-500/20",
+      image: "/resources/services/CAdaptation.png",
     },
     {
       id: "physics",
@@ -49,6 +47,14 @@ export default function Service() {
       title: "PhysBones Setup",
       desc: "Optimized physics configuration for hair, ears, tail, breasts, and cloth elements to ensure fluid, realistic in-game movements.",
       bgColor: "bg-rose-500/5 border-rose-500/20",
+      image: "/resources/services/BSetup.png",
+    },
+    {
+      id: "re-sculpt",
+      icon: <FaHammer className="w-8 h-8 text-purple-500" />,
+      title: "Re-sculpts",
+      desc: "Custom mesh edits, facial expression adjustments, shape keys, and body proportion tuning to reshape your avatar exactly as you envision.",
+      bgColor: "bg-purple-500/5 border-purple-500/20",
     },
   ];
 
@@ -103,8 +109,8 @@ export default function Service() {
   }, { scope: containerRef });
 
   return (
-    <section 
-      id="services" 
+    <section
+      id="services"
       ref={containerRef}
       className="relative bg-background border-b border-border overflow-hidden lg:h-screen flex flex-col justify-center py-20 lg:py-0"
     >
@@ -117,7 +123,7 @@ export default function Service() {
           Specializations
         </span>
         <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-none text-foreground">
-          Services Portfolio
+          My services
         </h2>
         <p className="text-muted-foreground text-sm sm:text-base mt-3 max-w-xl">
           Here is a breakdown of the specific modifications and design services I provide for VRChat & custom avatar creators.
@@ -126,7 +132,7 @@ export default function Service() {
 
       {/* Scroll Wrapper */}
       <div className="services-scroll-wrapper w-full overflow-x-auto lg:overflow-x-hidden scrollbar-none">
-        <div 
+        <div
           ref={trackRef}
           className="services-horizontal-track pb-6 md:pb-0"
         >
@@ -155,21 +161,37 @@ export default function Service() {
                 </p>
               </div>
 
-              {/* Custom SVG Graphic Grid mimicking avatar specs */}
+              {/* Custom SVG Graphic Grid mimicking avatar specs / Example Button */}
               <div className="w-full h-12 rounded-xl bg-background/50 border border-border/80 p-2 flex items-center justify-between overflow-hidden">
                 <div className="flex gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                   <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
                   <span className="h-1.5 w-1.5 rounded-full bg-foreground/20" />
                 </div>
-                <div className="text-[10px] font-mono text-muted-foreground">
-                  RENDER_MODE://GPU_ACCEL
-                </div>
+                {service.image ? (
+                  <button
+                    onClick={() => setActiveImage(service.image || null)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border border-primary text-primary hover:bg-primary/10 bg-transparent transition-all active:scale-95 cursor-pointer"
+                  >
+                    <FaEye className="w-3.5 h-3.5" />
+                    <span>Example</span>
+                  </button>
+                ) : (
+                  <div className="text-[10px] font-mono text-muted-foreground select-none pr-1">
+                    No preview available
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <Lightbox
+        isOpen={activeImage !== null}
+        imageSrc={activeImage}
+        onClose={() => setActiveImage(null)}
+      />
     </section>
   );
 }
