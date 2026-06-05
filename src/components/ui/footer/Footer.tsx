@@ -67,7 +67,7 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <img
                 src="/resources/logo.png"
-                alt="Zilla_H3 Logo"
+                alt="Zilla_ZH3 Logo"
                 className="h-9 w-9 object-contain"
               />
               <span className="font-display font-bold text-xl tracking-tight text-foreground">

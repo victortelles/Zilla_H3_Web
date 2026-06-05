@@ -43,10 +43,9 @@ export default function Credits() {
 
   // Load social URLs from the config service
   const zillaSocials = [
-    { platform: "telegram" as const, url: configService.getContactTelegram() || "https://t.me/Zilla_H3", label: "Telegram" },
-    { platform: "twitter" as const, url: configService.getTwitterProfile() || "https://x.com/Zilla_H3", label: "Twitter" },
-    { platform: "vrchat" as const, url: configService.getVRChatProfile() || "https://vrchat.com/home/user/usr_zilla", label: "VRChat" },
-    { platform: "discord" as const, url: configService.getContactDiscord() || "https://discord.gg/zilla", label: "Discord" },
+    { platform: "telegram" as const, url: configService.getContactTelegram() || "https://t.me/zillazh3 ", label: "Telegram" },
+    { platform: "twitter" as const, url: configService.getTwitterProfile() || "https://x.com/Zilla_ZH3", label: "Twitter" },
+    { platform: "vrchat" as const, url: configService.getVRChatProfile() || "https://vrchat.com/home/user/usr_71b0c9a9-3107-49dc-a461-844df7e82b38", label: "VRChat" }
   ];
 
   const devSocials = [
@@ -56,7 +55,7 @@ export default function Credits() {
 
   const authors: AuthorProfile[] = [
     {
-      name: "Zilla_H3",
+      name: "Zilla_ZH3",
       role: "Lead 3D Artist & Avatar Creator",
       avatarUrl: "/resources/profile/profile.png",
       bio: "An accomplished avatar creator and customizer. Specialized in creating high-quality, fully optimized VRChat avatars, advanced 3D texturing, physics setups, clothing rigging, and accessory integrations.",
@@ -72,7 +71,7 @@ export default function Credits() {
       name: "AHTyler",
       role: "Full-Stack Web Developer",
       avatarUrl: "/resources/profile/tyler.jpg",
-      bio: "A full-stack software engineer focused on building premium web experiences. Developed the Zilla_H3 portfolio, implementing responsive layouts, Discord OAuth whitelist authentication, admin dashboard, and modern scroll interactions.",
+      bio: "A full-stack software engineer focused on building premium web experiences. Developed the Zilla_ZH3 portfolio, implementing responsive layouts, Discord OAuth whitelist authentication, admin dashboard, and modern scroll interactions.",
       details: [
         "Next.js App Router (React 19) & TypeScript architecture",
         "Tailwind CSS v4 & custom design theme system",
@@ -228,7 +227,7 @@ export default function Credits() {
               CREATORS & RESOURCES
             </h1>
             <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed font-body">
-              This project is a collaborative effort bringing together high-end 3D character design and interactive, modern web experiences. Here is a breakdown of the team and elements that make up the Zilla_H3 website.
+              This project is a collaborative effort bringing together high-end 3D character design and interactive, modern web experiences. Here is a breakdown of the team and elements that make up the Zilla_ZH3 website.
             </p>
           </div>
         </div>
@@ -348,7 +347,7 @@ export default function Credits() {
 
             <div className="max-w-2xl mx-auto text-center mb-8 relative z-10">
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-body">
-                The footer displays a series of bouncing chibi GIFs that represent custom avatars designed and customized by Zilla_H3. Hover over them to see their bouncing interactions!
+                The footer displays a series of bouncing chibi GIFs that represent custom avatars designed and customized by Zilla_ZH3. Hover over them to see their bouncing interactions!
               </p>
             </div>
 

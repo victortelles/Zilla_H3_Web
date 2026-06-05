@@ -3,8 +3,11 @@ import { AuthProvider } from "@/context/AuthContext";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Zilla H3 Web",
-  description: "Landing page & Avatar Creator del ecosistema H3",
+  title: "ZillaZH3 Works",
+  description: "Portafolio & Avatar Creator VRChat",
+  icons: {
+    icon: "/app/favicon.ico",
+  },
 };
 
 export default function RootLayout({

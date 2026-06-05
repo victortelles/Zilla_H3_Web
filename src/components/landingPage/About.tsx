@@ -166,7 +166,7 @@ export default function About() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/resources/profile/profile.png"
-                  alt="Zilla_H3 Creator Profile"
+                  alt="Zilla_ZH3 Creator Profile"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>

@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
     const newProject = {
       id: `${cleanTitle}-${Date.now()}`,
       name: title,
-      creator: "ZILLA_H3",
+      creator: "ZILLA_ZH3",
       polyCount: polyCount || "Unspecified",
       tags: parsedTags,
       image: `/project/${filename}`,

@@ -61,7 +61,7 @@ export default function Hero() {
         ref={titleBgRef}
         className="absolute top-[18%] font-display font-black text-[12vw] tracking-tight leading-none text-foreground/5 dark:text-foreground/[0.03] select-none pointer-events-none text-center z-1"
       >
-        ZILLA_H3
+        ZILLA_ZH3
       </div>
 
       {/* Grid Pattern Background */}

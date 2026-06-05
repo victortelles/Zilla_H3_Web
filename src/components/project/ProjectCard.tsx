@@ -13,7 +13,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project, className = "h-fit" }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const textLimit = 120;
-  
+
   if (!project) return null;
 
   const descriptionText = project.description || "";
@@ -57,7 +57,7 @@ export default function ProjectCard({ project, className = "h-fit" }: ProjectCar
           <div className="flex justify-between items-start gap-2">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground font-body">
-                By {project.creator || "ZILLA_H3"}
+                By {project.creator || "ZILLA_ZH3"}
               </span>
               <h3 className="font-display font-bold text-xl text-foreground mt-0.5 group-hover/card:text-primary transition-colors">
                 {project.name || "Untitled Creation"}

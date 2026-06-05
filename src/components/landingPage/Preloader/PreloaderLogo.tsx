@@ -10,7 +10,7 @@ export default function PreloaderLogo() {
       <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight flex items-center select-none text-white">
         <span className="logo-zilla inline-block">ZILLA</span>
         <span className="logo-underscore inline-block text-white mx-[-12px]">_</span>
-        <span className="logo-h3 inline-block">H3</span>
+        <span className="logo-h3 inline-block">ZH3</span>
       </h1>
 
       {/* Subtitle */}

@@ -1,6 +1,6 @@
-# Zilla_H3 — Avatar Creator Portfolio & Showcase
+# Zilla_ZH3 — Avatar Creator Portfolio & Showcase
 
-Zilla_H3 is a premium web application designed to showcase the work, custom avatar designs, texturing, accessory integrations, and commission availability for the avatar creator **Zilla_H3**.
+Zilla_ZH3 is a premium web application designed to showcase the work, custom avatar designs, texturing, accessory integrations, and commission availability for the avatar creator **Zilla_ZH3**.
 
 The site features high-quality, scroll-triggered interactive experiences, blending rich animations (GSAP and Framer Motion) with a clean design system built using Next.js (App Router) and Tailwind CSS v4.
 
