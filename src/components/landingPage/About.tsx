@@ -165,7 +165,7 @@ export default function About() {
                 {/* Creator profile image */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/resources/profile/profile.png"
+                  src="/resources/profile/profile.webp"
                   alt="Zilla_ZH3 Creator Profile"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />

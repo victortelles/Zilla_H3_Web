@@ -48,7 +48,7 @@ export default function PreloaderBackground() {
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/resources/cloud-03.png"
+          src="/resources/cloud-03.webp"
           alt="Cloud Left 2"
           className="preloader-cloud preloader-cloud-left absolute left-[-10%] bottom-[15%] w-[45%] max-w-[500px] object-contain select-none pointer-events-none"
         />

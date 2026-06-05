@@ -186,25 +186,25 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       >
         <PreloaderCard
           title="Texturing"
-          imageSrc="/resources/pre-loader/C_paint_1.png"
-          glowImageSrc="/resources/pre-loader/C_paint_2.png"
+          imageSrc="/resources/pre-loader/C_paint_1.webp"
+          glowImageSrc="/resources/pre-loader/C_paint_2.webp"
           isTexturing={true}
         />
         <PreloaderCard
           title="Clothing"
-          imageSrc="/resources/pre-loader/C_Clothes.png"
+          imageSrc="/resources/pre-loader/C_Clothes.webp"
         />
         <PreloaderCard
           title="Bones"
-          imageSrc="/resources/pre-loader/C_accessory.png"
+          imageSrc="/resources/pre-loader/C_accessory.webp"
         />
         <PreloaderCard
           title="Physics"
-          imageSrc="/resources/pre-loader/C_Physics.png"
+          imageSrc="/resources/pre-loader/C_Physics.webp"
         />
         <PreloaderCard
           title="Custom"
-          imageSrc="/resources/pre-loader/C_custom.png"
+          imageSrc="/resources/pre-loader/C_custom.webp"
           badgeSrc="/resources/pre-loader/FuralityUltra.webp"
         />
       </div>

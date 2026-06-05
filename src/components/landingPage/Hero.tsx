@@ -45,13 +45,13 @@ export default function Hero() {
       {/* Hero Background Images (Light & Dark Switching) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/resources/hero/bg-lightmode-hero.png"
+        src="/resources/hero/bg-lightmode-hero.webp"
         alt="Hero Background Light"
         className="absolute inset-0 w-full h-full object-cover opacity-[0.25] dark:opacity-0 transition-opacity duration-300 pointer-events-none z-0"
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/resources/hero/bg-darkmode-hero.png"
+        src="/resources/hero/bg-darkmode-hero.webp"
         alt="Hero Background Dark"
         className="absolute inset-0 w-full h-full object-cover opacity-0 dark:opacity-[0.25] transition-opacity duration-300 pointer-events-none z-0"
       />

@@ -57,7 +57,7 @@ export default function Credits() {
     {
       name: "Zilla_ZH3",
       role: "Lead 3D Artist & Avatar Creator",
-      avatarUrl: "/resources/profile/profile.png",
+      avatarUrl: "/resources/profile/profile.webp",
       bio: "An accomplished avatar creator and customizer. Specialized in creating high-quality, fully optimized VRChat avatars, advanced 3D texturing, physics setups, clothing rigging, and accessory integrations.",
       details: [
         "Substance 3D Painter & Photoshop Texturing",
