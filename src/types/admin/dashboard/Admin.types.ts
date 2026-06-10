@@ -9,4 +9,5 @@ export interface Project {
   species: string;
   createdAt: string;
   externalLink?: string;
+  featured?: boolean;
 }

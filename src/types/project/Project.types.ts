@@ -9,6 +9,7 @@ export interface Project {
   species: string;
   createdAt: string;
   externalLink?: string;
+  featured?: boolean;
 }
 
 export interface ProjectItem {
@@ -22,4 +23,5 @@ export interface ProjectItem {
   species: string;
   createdAt: string;
   externalLink?: string;
+  featured?: boolean;
 }
