@@ -53,12 +53,25 @@ export async function POST(request: NextRequest) {
     const tagsStr = formData.get("tags") as string;
     const externalLink = formData.get("externalLink") as string;
     const imageFile = formData.get("image") as File;
+    const featured = formData.get("featured") === "true";
 
     if (!title || !description || !species || !imageFile) {
       return NextResponse.json(
         { error: "Title, Description, Species, and Image file are required." },
         { status: 400 }
       );
+    }
+
+    // Check featured limit
+    if (featured) {
+      const currentProjects = await readProjects();
+      const featuredCount = currentProjects.filter((p) => p.featured).length;
+      if (featuredCount >= 5) {
+        return NextResponse.json(
+          { error: "Maximum limit of 5 featured projects has been reached." },
+          { status: 400 }
+        );
+      }
     }
 
     // 3. Image Validation (png, jpeg, webp, max 10MB)
@@ -125,6 +138,7 @@ export async function POST(request: NextRequest) {
       species: species.trim(),
       createdAt: new Date().toISOString(),
       externalLink: externalLink ? externalLink.trim() : undefined,
+      featured: featured,
     };
 
     // Update species list in species.json if new
@@ -226,3 +240,174 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  try {
+    // 1. Authenticate session
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get("zilla_session")?.value;
+
+    if (!sessionCookie) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = decryptSession(sessionCookie);
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // 2. Parse Multipart Form Data
+    const formData = await request.formData();
+    const id = formData.get("id") as string;
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const species = formData.get("species") as string;
+    const polyCount = formData.get("polyCount") as string;
+    const tagsStr = formData.get("tags") as string;
+    const externalLink = formData.get("externalLink") as string;
+    const featured = formData.get("featured") === "true";
+    const imageFile = formData.get("image") as File | null;
+
+    if (!id || !title || !description || !species) {
+      return NextResponse.json(
+        { error: "Project ID, Title, Description, and Species are required." },
+        { status: 400 }
+      );
+    }
+
+    // 3. Read projects
+    const projects = await readProjects();
+    const projectIndex = projects.findIndex((p) => p.id === id);
+
+    if (projectIndex === -1) {
+      return NextResponse.json({ error: "Project not found." }, { status: 404 });
+    }
+
+    const existingProject = projects[projectIndex];
+
+    // 4. Validate featured limit
+    if (featured) {
+      const otherFeaturedCount = projects.filter((p) => p.featured && p.id !== id).length;
+      if (otherFeaturedCount >= 5) {
+        return NextResponse.json(
+          { error: "Maximum limit of 5 featured projects has been reached." },
+          { status: 400 }
+        );
+      }
+    }
+
+    // 5. Handle image upload if a new file is provided
+    let filename = "";
+    if (imageFile && imageFile.size > 0 && typeof imageFile.name === "string") {
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+      if (!allowedTypes.includes(imageFile.type)) {
+        return NextResponse.json(
+          { error: "Invalid image format. Allowed formats: PNG, JPEG, WEBP." },
+          { status: 400 }
+        );
+      }
+
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (imageFile.size > maxSize) {
+        return NextResponse.json(
+          { error: "Image file exceeds the 10MB limit." },
+          { status: 400 }
+        );
+      }
+
+      const extension = imageFile.name.split(".").pop() || "png";
+      const cleanTitle = title
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+      const timestamp = new Date()
+        .toISOString()
+        .replace(/T/, "-")
+        .replace(/\..+/, "")
+        .replace(/:/g, "")
+        .substring(0, 15);
+
+      filename = `${cleanTitle}-${timestamp}.${extension}`;
+      const imagePath = path.join(uploadDir, filename);
+
+      const arrayBuffer = await imageFile.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      await fs.mkdir(uploadDir, { recursive: true });
+      await fs.writeFile(imagePath, buffer);
+
+      // Delete old image
+      const oldImageRelativePath = existingProject.image;
+      if (oldImageRelativePath && oldImageRelativePath.startsWith("/project/")) {
+        const oldFilename = path.basename(oldImageRelativePath);
+        const fullOldImagePath = path.join(uploadDir, oldFilename);
+        try {
+          await fs.unlink(fullOldImagePath);
+        } catch (err) {
+          console.error(`Failed to delete old file at ${fullOldImagePath}:`, err);
+        }
+      }
+    }
+
+    // 6. Update tags & species lists
+    const parsedTags = tagsStr
+      ? tagsStr
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
+      : [];
+
+    const speciesDataPath = path.join(process.cwd(), "data", "species.json");
+    try {
+      const speciesData = await fs.readFile(speciesDataPath, "utf-8");
+      const speciesList = JSON.parse(speciesData) as string[];
+      const trimmedSpecies = species.trim();
+      if (trimmedSpecies && !speciesList.some((s) => s.toLowerCase() === trimmedSpecies.toLowerCase())) {
+        speciesList.push(trimmedSpecies);
+        await fs.writeFile(speciesDataPath, JSON.stringify(speciesList, null, 2), "utf-8");
+      }
+    } catch (err) {
+      console.error("Failed to update species.json on PUT:", err);
+    }
+
+    const tagsDataPath = path.join(process.cwd(), "data", "tags.json");
+    try {
+      const tagsData = await fs.readFile(tagsDataPath, "utf-8");
+      const tagsList = JSON.parse(tagsData) as string[];
+      let updatedTags = false;
+      for (const tag of parsedTags) {
+        if (!tagsList.some((t) => t.toLowerCase() === tag.toLowerCase())) {
+          tagsList.push(tag);
+          updatedTags = true;
+        }
+      }
+      if (updatedTags) {
+        await fs.writeFile(tagsDataPath, JSON.stringify(tagsList, null, 2), "utf-8");
+      }
+    } catch (err) {
+      console.error("Failed to update tags.json on PUT:", err);
+    }
+
+    // 7. Update project fields
+    existingProject.name = title;
+    existingProject.description = description;
+    existingProject.species = species.trim();
+    existingProject.polyCount = polyCount || "Unspecified";
+    existingProject.tags = parsedTags;
+    existingProject.externalLink = externalLink ? externalLink.trim() : undefined;
+    existingProject.featured = featured;
+    if (filename) {
+      existingProject.image = `/project/${filename}`;
+    }
+
+    await fs.writeFile(projectDataPath, JSON.stringify(projects, null, 2), "utf-8");
+
+    return NextResponse.json({ success: true, project: existingProject }, { status: 200 });
+  } catch (error) {
+    console.error("Failed to update project:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
