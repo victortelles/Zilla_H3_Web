@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaChevronRight, FaStar, FaProjectDiagram } from "react-icons/fa";
 import Button from "../ui/button/Button";
 import { useRouter } from "next/navigation";
-import { ProjectCard } from "@/components/project";
+import { GalleryCard } from "@/components/project";
 import { Project } from "@/types/project/Project.types";
 import EmptyState from "@/components/ui/emptyState/EmptyState";
 import "@/styles/gallery.css";
@@ -15,7 +15,7 @@ import "@/styles/gallery.css";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const SkeletonCard = () => (
-  <div className="gallery-card-item rounded-3xl border border-border bg-card p-4 shadow-sm animate-pulse flex flex-col justify-between h-[360px] md:h-[400px]">
+  <div className="gallery-card-item rounded-3xl border border-border bg-card p-4 shadow-sm animate-pulse flex flex-col justify-between min-h-[360px] md:min-h-[400px]">
     <div className="relative aspect-[4/3] w-full rounded-2xl bg-muted border border-border/60 overflow-hidden flex items-center justify-center">
       <div className="w-12 h-12 rounded-full bg-border" />
     </div>
@@ -54,6 +54,8 @@ export default function Gallery() {
       .finally(() => setLoading(false));
   }, []);
 
+  const featuredProjects = projects.filter((p) => p.featured).slice(0, 5);
+
   useGSAP(() => {
     if (loading || !containerRef.current || !trackRef.current) return;
 
@@ -63,7 +65,7 @@ export default function Gallery() {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 1024px)", () => {
-      if (projects.length === 0) return;
+      if (featuredProjects.length === 0) return;
 
       // Pin the Gallery container and slide horizontally
       gsap.to(track, {
@@ -88,7 +90,7 @@ export default function Gallery() {
     });
 
     return () => mm.revert();
-  }, { dependencies: [loading, projects.length], scope: containerRef });
+  }, { dependencies: [loading, featuredProjects.length], scope: containerRef });
 
   return (
     <section
@@ -113,7 +115,7 @@ export default function Gallery() {
       </div>
 
       {/* Main Content Area */}
-      {!loading && projects.length === 0 ? (
+      {!loading && featuredProjects.length === 0 ? (
         <EmptyState
           title="Gallery is Empty"
           description="We are currently designing and texturing custom models for our next release. Stay tuned for new showcases, wireframes, and optimized builds!"
@@ -132,18 +134,18 @@ export default function Gallery() {
                 <SkeletonCard key={idx} />
               ))
             ) : (
-              /* Render Projects (3-4 most recent) */
-              projects.slice(0, 4).map((project, index) => (
-                <ProjectCard
+              /* Render Projects (Up to 5 featured) */
+              featuredProjects.map((project, index) => (
+                <GalleryCard
                   key={project.id || index}
                   project={project}
-                  className="gallery-card-item h-[360px] md:h-[400px]"
+                  className="gallery-card-item h-fit min-h-[360px] md:min-h-[400px]"
                 />
               ))
             )}
 
             {/* Call-to-action Card (View All Projects) */}
-            <div className="gallery-card-item flex flex-col justify-between items-center text-center p-6 border border-dashed border-primary/45 rounded-3xl bg-primary/[0.02] hover:bg-primary/[0.04] transition-colors duration-300 h-[360px] md:h-[400px]">
+            <div className="gallery-card-item flex flex-col justify-between items-center text-center p-6 border border-dashed border-primary/45 rounded-3xl bg-primary/[0.02] hover:bg-primary/[0.04] transition-colors duration-300 min-h-[360px] md:min-h-[400px]">
               <div className="flex-1 flex flex-col items-center justify-center space-y-4">
                 <div className="p-4 bg-primary/10 border border-primary/20 text-primary rounded-2xl">
                   <FaProjectDiagram className="w-8 h-8" />

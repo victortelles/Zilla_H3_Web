@@ -5,12 +5,21 @@ import { FaSpinner, FaPlus } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/ui/button/Button";
 import { SpeciesSelect, TagsSelect, ImageUpload } from "./forms";
+import { Project } from "@/types/admin/dashboard/Admin.types";
 
 interface ProjectUploadFormProps {
   onProjectAdded: () => void;
+  editingProject: Project | null;
+  onCancelEdit: () => void;
+  projects: Project[];
 }
 
-export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormProps) {
+export default function ProjectUploadForm({
+  onProjectAdded,
+  editingProject,
+  onCancelEdit,
+  projects,
+}: ProjectUploadFormProps) {
   const { showToast } = useAuth();
 
   // Form states
@@ -20,6 +29,7 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
   const [externalLink, setExternalLink] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isFeatured, setIsFeatured] = useState(false);
   const [isSubmittingProject, setIsSubmittingProject] = useState(false);
   const [dragActive, setDragActive] = useState(false);
 
@@ -61,6 +71,48 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
     };
     fetchData();
   }, []);
+
+  // Populate form fields in Edit Mode
+  useEffect(() => {
+    if (editingProject) {
+      setTitle(editingProject.name || "");
+      setDescription(editingProject.description || "");
+      setPolyCount(editingProject.polyCount || "");
+      setExternalLink(editingProject.externalLink || "");
+      setIsFeatured(editingProject.featured || false);
+      setSelectedTags(editingProject.tags || []);
+
+      // Determine species dropdown selection
+      if (editingProject.species) {
+        if (speciesList.includes(editingProject.species)) {
+          setSelectedSpecies(editingProject.species);
+          setCustomSpecies("");
+        } else {
+          setSelectedSpecies("other");
+          setCustomSpecies(editingProject.species);
+        }
+      } else {
+        setSelectedSpecies("");
+        setCustomSpecies("");
+      }
+
+      // Show existing image as preview
+      setImagePreview(editingProject.image || null);
+      setImageFile(null);
+    } else {
+      // Clear fields for normal mode
+      setTitle("");
+      setDescription("");
+      setPolyCount("");
+      setExternalLink("");
+      setIsFeatured(false);
+      setSelectedTags([]);
+      setSelectedSpecies("");
+      setCustomSpecies("");
+      setImageFile(null);
+      setImagePreview(null);
+    }
+  }, [editingProject, speciesList]);
 
   // Handle click outside to close dropdowns
   useEffect(() => {
@@ -134,7 +186,7 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
   const handleAddCustomTag = () => {
     const trimmed = newCustomTag.trim();
     if (!trimmed) return;
-    
+
     // Check if it's already selected
     if (selectedTags.includes(trimmed)) {
       showToast("Tag is already selected.", "info");
@@ -146,7 +198,7 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
     if (!tagsList.some(t => t.toLowerCase() === trimmed.toLowerCase())) {
       setTagsList((prev) => [...prev, trimmed]);
     }
-    
+
     // Select it
     setSelectedTags((prev) => [...prev, trimmed]);
     setNewCustomTag("");
@@ -166,29 +218,50 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
     // Determine species value to upload
     const finalSpecies = selectedSpecies === "other" ? customSpecies.trim() : selectedSpecies;
 
-    if (!title || !description || !finalSpecies || !imageFile) {
+    if (!title || !description || !finalSpecies || (!imageFile && !editingProject)) {
       showToast("Please fill all required fields and upload an image.", "error");
       return;
+    }
+
+    // Featured limit validation
+    if (isFeatured) {
+      const otherFeatured = projects.filter((p) => p.featured && p.id !== editingProject?.id);
+      if (otherFeatured.length >= 5) {
+        showToast("Maximum limit of 5 featured projects has been reached. Please uncheck another project first.", "error");
+        return;
+      }
     }
 
     setIsSubmittingProject(true);
     try {
       const formData = new FormData();
+      if (editingProject) {
+        formData.append("id", editingProject.id);
+      }
       formData.append("title", title);
       formData.append("description", description);
       formData.append("species", finalSpecies);
       formData.append("polyCount", polyCount);
       formData.append("tags", selectedTags.join(","));
       formData.append("externalLink", externalLink);
-      formData.append("image", imageFile);
+      formData.append("featured", isFeatured ? "true" : "false");
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
+      const method = editingProject ? "PUT" : "POST";
       const res = await fetch("/api/projects", {
-        method: "POST",
+        method,
         body: formData,
       });
 
       if (res.ok) {
-        showToast("New project added to portfolio!", "success");
+        showToast(
+          editingProject
+            ? "Project updated successfully!"
+            : "New project added to portfolio!",
+          "success"
+        );
         // Reset form
         setTitle("");
         setDescription("");
@@ -199,6 +272,7 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
         setExternalLink("");
         setImageFile(null);
         setImagePreview(null);
+        setIsFeatured(false);
         // Refresh items in parent
         onProjectAdded();
 
@@ -227,14 +301,18 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
     }
   };
 
+  const featuredCount = projects.filter((p) => p.featured).length;
+
   return (
     <div className="bg-card border border-border p-6 rounded-3xl shadow-sm text-left space-y-6">
       <div>
         <h2 className="font-display font-bold text-lg text-foreground uppercase tracking-tight">
-          Upload Creative Project
+          {editingProject ? `Edit Creative Project: ${editingProject.name}` : "Upload Creative Project"}
         </h2>
         <p className="font-body text-xs text-muted-foreground mt-1">
-          Publish a new avatar build to the dynamic portfolio registry.
+          {editingProject
+            ? "Modify this build details in the dynamic portfolio registry."
+            : "Publish a new avatar build to the dynamic portfolio registry."}
         </p>
       </div>
 
@@ -295,18 +373,52 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
           />
         </div>
 
-        {/* External Redirect Link */}
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-            External Redirect Link (e.g. YouTube, TikTok, VRChat, Instagram)
-          </label>
-          <input
-            type="url"
-            placeholder="e.g. https://vrchat.com/home/avatar/avatar_... or social link"
-            value={externalLink}
-            onChange={(e) => setExternalLink(e.target.value)}
-            className="w-full h-11 px-4 text-sm rounded-xl border border-border bg-muted/20 text-foreground focus:border-primary focus:outline-none transition-colors font-body"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* External Redirect Link */}
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              External Redirect Link
+            </label>
+            <input
+              type="url"
+              placeholder="e.g. https://vrchat.com/home/avatar/... or social link"
+              value={externalLink}
+              onChange={(e) => setExternalLink(e.target.value)}
+              className="w-full h-11 px-4 text-sm rounded-xl border border-border bg-muted/20 text-foreground focus:border-primary focus:outline-none transition-colors font-body"
+            />
+          </div>
+
+          {/* Featured Status Selector */}
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                Featured Status
+              </label>
+              <span className="text-[9px] font-mono font-bold text-muted-foreground">
+                {featuredCount}/5 Featured
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsFeatured(!isFeatured)}
+              className={`w-full h-11 px-4 rounded-xl border transition-all duration-200 flex items-center justify-between cursor-pointer font-body text-sm ${
+                isFeatured
+                  ? "bg-primary/10 border-primary text-primary font-bold"
+                  : "bg-muted/20 border-border text-muted-foreground"
+              }`}
+            >
+              <span>{isFeatured ? "Featured (On Landing Page)" : "Not Featured"}</span>
+              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                isFeatured ? "bg-primary border-primary text-white" : "border-border bg-background"
+              }`}>
+                {isFeatured && (
+                  <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 20 20">
+                    <path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/>
+                  </svg>
+                )}
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Description */}
@@ -335,7 +447,18 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
           fileInputRef={fileInputRef}
         />
 
-        <div className="pt-2 flex justify-end">
+        <div className="pt-2 flex justify-end gap-3">
+          {editingProject && (
+            <Button
+              variant="outline"
+              size="md"
+              type="button"
+              onClick={onCancelEdit}
+              className="w-full md:w-auto h-11 px-8 gap-2 font-bold uppercase text-xs tracking-wider"
+            >
+              Cancel Edit
+            </Button>
+          )}
           <Button
             variant="primary"
             size="md"
@@ -345,11 +468,11 @@ export default function ProjectUploadForm({ onProjectAdded }: ProjectUploadFormP
           >
             {isSubmittingProject ? (
               <>
-                <FaSpinner className="w-3.5 h-3.5 animate-spin" /> Uploading build...
+                <FaSpinner className="w-3.5 h-3.5 animate-spin" /> {editingProject ? "Updating build..." : "Uploading build..."}
               </>
             ) : (
               <>
-                <FaPlus className="w-3 h-3" /> Publish Project
+                {editingProject ? "Update Project" : "Publish Project"}
               </>
             )}
           </Button>

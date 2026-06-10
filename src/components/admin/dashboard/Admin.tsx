@@ -23,6 +23,7 @@ export default function AdminDashboard() {
   // Project inventory state
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
   // Delete project modal state
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -145,6 +146,15 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleEditProjectClick = (project: Project) => {
+    setEditingProject(project);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingProject(null);
+  };
+
   // 1. Loading credentials view
   if (loading) {
     return (
@@ -224,7 +234,15 @@ export default function AdminDashboard() {
           </div>
 
           <div className="lg:col-span-2 space-y-8 animate-fade-in-right">
-            <ProjectUploadForm onProjectAdded={fetchProjects} />
+            <ProjectUploadForm
+              onProjectAdded={() => {
+                fetchProjects();
+                setEditingProject(null);
+              }}
+              editingProject={editingProject}
+              onCancelEdit={handleCancelEdit}
+              projects={projects}
+            />
           </div>
         </div>
 
@@ -233,6 +251,7 @@ export default function AdminDashboard() {
             projects={projects}
             isLoading={isLoadingProjects}
             onDeleteProject={handleDeleteProject}
+            onEditProject={handleEditProjectClick}
           />
         </div>
       </main>

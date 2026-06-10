@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaTrash, FaInfoCircle, FaSpinner, FaExternalLinkAlt } from "react-icons/fa";
+import { FaTrash, FaInfoCircle, FaSpinner, FaExternalLinkAlt, FaEdit } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Project } from "@/types/admin/dashboard/Admin.types";
 
@@ -9,14 +9,17 @@ interface ProjectRegistryProps {
   projects: Project[];
   isLoading: boolean;
   onDeleteProject: (id: string, name: string) => void;
+  onEditProject: (project: Project) => void;
 }
 
 function ProjectRegistryCard({
   project,
   onDelete,
+  onEdit,
 }: {
   project: Project;
   onDelete: () => void;
+  onEdit: () => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const textLimit = 120;
@@ -36,8 +39,11 @@ function ProjectRegistryCard({
             alt={project.name || "Project Image"}
             className="w-full h-full object-cover"
           />
-          <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-background/80 backdrop-blur-sm border border-border/80 text-[9px] font-bold text-foreground">
+          <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-background/80 backdrop-blur-sm border border-border/80 text-[9px] font-bold text-foreground flex items-center gap-1">
             {project.species || "Unspecified"}
+            {project.featured && (
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" title="Featured" />
+            )}
           </span>
 
           {/* External redirection link icon (top right corner) */}
@@ -55,8 +61,13 @@ function ProjectRegistryCard({
         </div>
 
         <div className="space-y-1">
-          <h3 className="font-display font-bold text-base text-foreground">
-            {project.name || "Untitled Creation"}
+          <h3 className="font-display font-bold text-base text-foreground flex items-center justify-between">
+            <span>{project.name || "Untitled Creation"}</span>
+            {project.featured && (
+              <span className="text-[10px] font-bold text-amber-500 uppercase tracking-wider bg-amber-500/10 px-1.5 py-0.5 rounded">
+                Featured
+              </span>
+            )}
           </h3>
           <div className="relative text-left font-body text-[11px] text-muted-foreground leading-relaxed">
             <div className="relative">
@@ -106,12 +117,21 @@ function ProjectRegistryCard({
         <span className="text-[9px] font-mono text-muted-foreground">
           {project.polyCount || "No PolyCount"}
         </span>
-        <button
-          onClick={onDelete}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive hover:bg-destructive hover:text-white transition-all text-[10px] font-bold cursor-pointer"
-        >
-          <FaTrash className="w-3.5 h-4" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onEdit}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all text-[10px] font-bold cursor-pointer"
+            title="Edit Project"
+          >
+            <FaEdit className="w-3.5 h-4" />
+          </button>
+          <button
+            onClick={onDelete}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive hover:bg-destructive hover:text-white transition-all text-[10px] font-bold cursor-pointer"
+          >
+            <FaTrash className="w-3.5 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -121,6 +141,7 @@ export default function ProjectRegistry({
   projects,
   isLoading,
   onDeleteProject,
+  onEditProject,
 }: ProjectRegistryProps) {
   if (isLoading) {
     return (
@@ -167,6 +188,7 @@ export default function ProjectRegistry({
               key={project.id || index}
               project={project}
               onDelete={() => onDeleteProject(project.id || "", project.name || "")}
+              onEdit={() => onEditProject(project)}
             />
           ))}
         </div>
