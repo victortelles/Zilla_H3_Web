@@ -88,6 +88,7 @@ export default function Credits() {
     { name: "Tyler", src: "/resources/chibis/tyler.gif" },
     { name: "8Bits", src: "/resources/chibis/8bits.gif" },
     { name: "Jocho", src: "/resources/chibis/jocho.gif" },
+    { name: "Will", src: "/resources/chibis/will.gif" },
   ];
 
   const technologies = [
@@ -351,7 +352,7 @@ export default function Credits() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 sm:gap-4 lg:gap-8 justify-items-center relative z-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-4 lg:gap-8 justify-items-center relative z-10 max-w-4xl mx-auto">
               {chibis.map((chibi, index) => (
                 <div
                   key={chibi.name}

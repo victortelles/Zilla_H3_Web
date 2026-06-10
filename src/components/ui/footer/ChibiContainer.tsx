@@ -10,6 +10,7 @@ export default function ChibiContainer() {
     { name: "tyler", src: "/resources/chibis/tyler.gif" },
     { name: "8bits", src: "/resources/chibis/8bits.gif" },
     { name: "jocho", src: "/resources/chibis/jocho.gif" },
+    { name: "will", src: "/resources/chibis/will.gif" },
   ];
 
   return (
