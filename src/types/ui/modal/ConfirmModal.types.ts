@@ -7,4 +7,6 @@ export interface ConfirmModalProps {
   confirmText?: string;
   cancelText?: string;
   isLoading?: boolean;
+  loadingText?: string;
 }
+

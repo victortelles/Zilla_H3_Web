@@ -14,6 +14,7 @@ import CommissionConfig from "./CommissionConfig";
 import ProjectUploadForm from "./ProjectUploadForm";
 import ProjectRegistry from "./ProjectRegistry";
 import ConfirmModal from "@/components/ui/modal/ConfirmModal";
+import BackupControl from "./BackupControl";
 
 export default function AdminDashboard() {
   const { user, authenticated, loading, logout, showToast } = useAuth();
@@ -231,6 +232,7 @@ export default function AdminDashboard() {
               isUpdatingStatus={isUpdatingStatus}
               onUpdateStatus={handleUpdateStatus}
             />
+            <BackupControl />
           </div>
 
           <div className="lg:col-span-2 space-y-8 animate-fade-in-right">

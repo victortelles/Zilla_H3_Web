@@ -15,6 +15,7 @@ export default function ConfirmModal({
   confirmText = "Delete",
   cancelText = "Cancel",
   isLoading = false,
+  loadingText = "Removing...",
 }: ConfirmModalProps) {
   // Listen for Escape key to close the modal
   useEffect(() => {
@@ -98,7 +99,7 @@ export default function ConfirmModal({
               >
                 {isLoading ? (
                   <>
-                    <FaSpinner className="w-3.5 h-3.5 animate-spin" /> Removing...
+                    <FaSpinner className="w-3.5 h-3.5 animate-spin" /> {loadingText}
                   </>
                 ) : (
                   confirmText
