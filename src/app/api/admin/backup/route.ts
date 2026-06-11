@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
       if (!Array.isArray(data.species)) {
         return NextResponse.json({ error: "Species must be an array" }, { status: 400 });
       }
-      if (data.species.some((s: any) => typeof s !== "string")) {
+      if (data.species.some((s: unknown) => typeof s !== "string")) {
         return NextResponse.json({ error: "Species array must contain only strings" }, { status: 400 });
       }
     }
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
       if (!Array.isArray(data.tags)) {
         return NextResponse.json({ error: "Tags must be an array" }, { status: 400 });
       }
-      if (data.tags.some((t: any) => typeof t !== "string")) {
+      if (data.tags.some((t: unknown) => typeof t !== "string")) {
         return NextResponse.json({ error: "Tags array must contain only strings" }, { status: 400 });
       }
     }

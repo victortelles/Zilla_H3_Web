@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaChevronRight, FaStar, FaProjectDiagram } from "react-icons/fa";
+import { FaChevronRight, FaProjectDiagram } from "react-icons/fa";
 import Button from "../ui/button/Button";
 import { useRouter } from "next/navigation";
 import { GalleryCard } from "@/components/project";
