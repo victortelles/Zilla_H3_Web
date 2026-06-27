@@ -15,7 +15,7 @@ export default function BackupControl({ onImportSuccess }: BackupControlProps) {
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [pendingBackupData, setPendingBackupData] = useState<any>(null);
+  const [pendingBackupData, setPendingBackupData] = useState<unknown>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -82,7 +82,7 @@ export default function BackupControl({ onImportSuccess }: BackupControlProps) {
 
         setPendingBackupData(parsed);
         setIsConfirmOpen(true);
-      } catch (err) {
+      } catch {
         showToast("Failed to parse JSON file.", "error");
       }
     };

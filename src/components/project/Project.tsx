@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { FaSpinner, FaChevronLeft, FaInfoCircle } from "react-icons/fa";
+import { FaSpinner, FaChevronLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/navbar/Navbar";
 import Footer from "@/components/ui/footer/Footer";

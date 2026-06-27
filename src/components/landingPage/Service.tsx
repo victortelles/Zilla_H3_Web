@@ -55,6 +55,7 @@ export default function Service() {
       title: "Re-sculpts",
       desc: "Custom mesh edits, facial expression adjustments, shape keys, and body proportion tuning to reshape your avatar exactly as you envision.",
       bgColor: "bg-purple-500/5 border-purple-500/20",
+      image: "/resources/services/RSculpts.png"
     },
   ];
 

@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FaSpinner, FaPlus } from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/ui/button/Button";
 import { SpeciesSelect, TagsSelect, ImageUpload } from "./forms";

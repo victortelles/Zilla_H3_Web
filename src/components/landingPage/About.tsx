@@ -80,7 +80,7 @@ export default function About() {
         {/* Left Side: Copywriting */}
         <div className="lg:col-span-7 flex flex-col space-y-6">
           <div className="about-animate-left inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
-            <FaUserPen className="w-3.5 h-3.5" /> Hi!, I'm Zilla-ZH3
+            <FaUserPen className="w-3.5 h-3.5" /> {"Hi!, I'm Zilla-ZH3"}
           </div>
 
           <h2 className="about-animate-left text-3xl sm:text-4xl font-black tracking-tight leading-tight">
@@ -89,7 +89,7 @@ export default function About() {
           </h2>
 
           <p className="about-animate-left text-muted-foreground leading-relaxed text-base sm:text-lg">
-            I'm an avatar creator, or avatar modifier, I actually have some experience to do a little of everything, but I'm specialized to texturing avatars!
+            {"I'm an avatar creator, or avatar modifier, I actually have some experience to do a little of everything, but I'm specialized to texturing avatars!"}
           </p>
 
           {/* Checklist */}
